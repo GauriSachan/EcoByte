@@ -1,0 +1,213 @@
+/* ------------------------------
+   Global Reset & Base
+--------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f5f9f4; /* light eco background */
+  color: #2e2e2e;
+  line-height: 1.6;
+}
+
+/* Eco theme colors */
+:root {
+  --eco-green: #2e7d32;
+  --eco-light-green: #66bb6a;
+  --eco-dark: #1b5e20;
+  --eco-brown: #8d6e63;
+  --eco-metal: #b0bec5;
+  --eco-gold: #fdd835;
+}
+
+/* ------------------------------
+   Navbar
+--------------------------------*/
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--eco-dark);
+  padding: 1rem 2rem;
+  color: #fff;
+}
+
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--eco-gold);
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 1.2rem;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.navbar a:hover {
+  color: var(--eco-light-green);
+}
+
+/* ------------------------------
+   Hero Section
+--------------------------------*/
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(to right, var(--eco-green), var(--eco-light-green));
+  color: white;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  background: var(--eco-gold);
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #ffc107;
+  transform: scale(1.05);
+}
+
+/* ------------------------------
+   Cards (Marketplace, Repair, Scrap)
+--------------------------------*/
+.card {
+  background: #fff;
+  border: 1px solid var(--eco-metal);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: 0.3s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.card h2 {
+  color: var(--eco-green);
+  margin-bottom: 1rem;
+}
+
+/* ------------------------------
+   Forms (Upload, Profile, etc.)
+--------------------------------*/
+form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+form input, form select, form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--eco-metal);
+  border-radius: 6px;
+}
+
+form button {
+  padding: 0.8rem 1.6rem;
+  background: var(--eco-green);
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+form button:hover {
+  background: var(--eco-dark);
+}
+
+/* ------------------------------
+   Dashboard (Stats, Coins, Scores)
+--------------------------------*/
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem;
+}
+
+.stat-box {
+  background: #fff;
+  border-left: 6px solid var(--eco-green);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.stat-box h3 {
+  font-size: 1.8rem;
+  color: var(--eco-dark);
+}
+
+/* ------------------------------
+   Community & Forum
+--------------------------------*/
+.community-post {
+  background: #fff;
+  border: 1px solid var(--eco-metal);
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 8px;
+}
+
+.community-post h4 {
+  color: var(--eco-green);
+}
+
+/* ------------------------------
+   Footer
+--------------------------------*/
+footer {
+  text-align: center;
+  padding: 2rem;
+  background: var(--eco-dark);
+  color: #fff;
+  margin-top: 3rem;
+}
+
+footer a {
+  color: var(--eco-gold);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
