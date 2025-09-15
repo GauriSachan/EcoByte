@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>EcoCycle | Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <script defer src="script.js"></script>
 </head>
 <body>
+  <!-- Navigation -->
   <nav class="navbar">
     <div class="logo">♻️ EcoCycle</div>
-    <ul>
+    <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="marketplace.html">Marketplace</a></li>
       <li><a href="upload.html">Upload</a></li>
@@ -20,29 +22,51 @@
     </ul>
   </nav>
 
+  <!-- Hero -->
   <header class="hero">
-    <h1>Turn E-Waste Into Opportunity 🌱</h1>
-    <p>Buy, sell, repair, and repurpose with impact.</p>
-    <a href="marketplace.html" class="btn">Explore Marketplace</a>
+    <div class="hero-content">
+      <h1>Turn E-Waste Into Opportunity 🌱</h1>
+      <p>Buy, sell, repair, and repurpose with impact.<br>
+      Together we can build a greener tomorrow.</p>
+      <a href="marketplace.html" class="btn">🌍 Explore Marketplace</a>
+    </div>
   </header>
 
+  <!-- Features -->
   <section class="features">
-    <div>
-      <h2>🌍 Eco Impact</h2>
-      <p>Track your personal CO₂ and landfill savings.</p>
-    </div>
-    <div>
-      <h2>🛠 Repair First</h2>
-      <p>AI Repairability Score helps you save & earn more.</p>
-    </div>
-    <div>
-      <h2>🎁 Scrap Kits</h2>
-      <p>DIY kits for students and innovators.</p>
+    <h2 class="section-title">Why Choose EcoCycle?</h2>
+    <div class="feature-grid">
+      <div class="card">
+        <h3>🌍 Eco Impact</h3>
+        <p>Track your personal CO₂ and landfill savings, and see your contribution to a cleaner planet.</p>
+      </div>
+      <div class="card">
+        <h3>🛠 Repair First</h3>
+        <p>AI-powered Repairability Score helps you save money, reduce waste, and extend product life.</p>
+      </div>
+      <div class="card">
+        <h3>🎁 Scrap Kits</h3>
+        <p>DIY kits for students, innovators, and creators to transform e-waste into amazing projects.</p>
+      </div>
     </div>
   </section>
 
+  <!-- Call to Action -->
+  <section class="cta">
+    <h2>Join the Movement 🌿</h2>
+    <p>Every small step counts toward a sustainable future. Start your eco journey today!</p>
+    <a href="upload.html" class="btn cta-btn">♻️ Start Recycling</a>
+  </section>
+
+  <!-- Footer -->
   <footer>
-    <p>© 2025 EcoCycle | Built for Hackathon</p>
+    <p>© 2025 EcoCycle | Built with 💚 for Hackathon</p>
+    <p>
+      <a href="#">Privacy Policy</a> | 
+      <a href="#">Terms</a> | 
+      <a href="#">Contact</a>
+    </p>
   </footer>
 </body>
 </html>
+
