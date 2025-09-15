@@ -3,60 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <title>EcoCycle | Upload</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="upload.css">
+  <script defer src="upload.js"></script>
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- Navigation Bar -->
   <nav class="navbar">
     <div class="logo">♻️ EcoCycle</div>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="upload.html" class="active">Upload</a></li>
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="community.html">Community</a></li>
     </ul>
   </nav>
 
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>Upload Your E-Waste & Get Rewarded 🌍</h1>
+    <p>Transform your old devices into opportunities. Earn <span class="highlight">Green Coins</span> with every upload.</p>
+  </header>
+
   <!-- Upload Section -->
   <section class="upload-section">
-    <div class="upload-container">
-      <h1>Upload Your E-Waste 📦</h1>
-      <p class="upload-subtext">Drag & drop or upload videos of your devices to get an AI-powered repair & recycling analysis.</p>
+    <div class="upload-card">
+      <h2>📤 Upload Your Device</h2>
+      <p>Select a video or photo of your e-waste item to begin our AI defect analysis.</p>
       
-      <!-- Drag & Drop Upload Box -->
-      <label for="uploadFile" class="upload-box" id="dropArea">
-        <span class="upload-icon">⬆️</span>
-        <p><strong>Click to browse</strong> or drag & drop your file here</p>
-        <small>Accepted: Video files (MP4, MOV, AVI)</small>
-      </label>
-      <input type="file" id="uploadFile" accept="video/*" hidden>
-
-      <!-- Preview -->
-      <div class="file-preview" id="filePreview"></div>
-
-      <!-- Progress Bar -->
-      <div class="progress-container" id="progressContainer" style="display:none;">
-        <div class="progress-bar" id="progressBar"></div>
+      <div class="upload-box" id="dropArea">
+        <input type="file" id="uploadFile" accept="video/*,image/*">
+        <label for="uploadFile">Drag & Drop or Click to Upload</label>
       </div>
 
-      <!-- Button -->
-      <button onclick="simulateDefectCheck()" class="btn upload-btn">Run ML Check ⚡</button>
+      <button onclick="simulateDefectCheck()" class="btn">Run ML Check</button>
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </div>
 
-      <!-- AI Result Box -->
-      <div class="ai-results" id="aiResults" style="display:none;">
-        <h2>🔍 AI Analysis</h2>
-        <p><strong>Repairability:</strong> <span id="repairScore">--%</span></p>
-        <p><strong>Recyclability:</strong> <span id="recycleScore">--%</span></p>
-        <p><strong>Eco Score:</strong> <span id="ecoScore">--/100</span></p>
+    <div class="results-card" id="resultsCard">
+      <h2>🔍 AI Analysis Results</h2>
+      <p id="analysisText">No file uploaded yet...</p>
+      <canvas id="analysisChart"></canvas>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits">
+    <h2>Why Upload with EcoCycle?</h2>
+    <div class="benefit-grid">
+      <div class="benefit">
+        <h3>💰 Earn Rewards</h3>
+        <p>Get Green Coins for every verified upload.</p>
+      </div>
+      <div class="benefit">
+        <h3>🌱 Save the Planet</h3>
+        <p>Your contribution helps reduce landfill waste.</p>
+      </div>
+      <div class="benefit">
+        <h3>🤖 Smart AI Analysis</h3>
+        <p>Instant defect detection with advanced ML models.</p>
+      </div>
+      <div class="benefit">
+        <h3>📊 Track Impact</h3>
+        <p>See your personal eco-stats in your dashboard.</p>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 EcoCycle | Built with 💚 for Hackathon</p>
+    <p>© 2025 EcoCycle | Built for a Greener Tomorrow 🌿</p>
   </footer>
 </body>
 </html>
-
-

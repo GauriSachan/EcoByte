@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EcoCycle | Side Panel</title>
+  <link rel="stylesheet" href="sidepanel.css">
+  <script defer src="sidepanel.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Toggle Button -->
+  <button id="openPanelBtn"><i class="fas fa-bars"></i></button>
+
+  <!-- Side Panel -->
+  <div id="sidePanel" class="panel">
+    <div class="panel-header">
+      <h2>🌱 EcoCycle</h2>
+      <button id="closePanelBtn"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- User Profile Section -->
+    <div class="user-section">
+      <img src="https://i.pravatar.cc/100" alt="User" class="user-avatar">
+      <h3>Welcome, Aanya</h3>
+      <p class="eco-balance">Green Coins: <span id="coins">250</span></p>
+      <button class="btn glow" onclick="claimDailyReward()">🎁 Claim Daily Reward</button>
+    </div>
+
+    <hr>
+
+    <!-- Navigation Links -->
+    <ul class="panel-links">
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="marketplace.html"><i class="fas fa-store"></i> Marketplace</a></li>
+      <li><a href="upload.html"><i class="fas fa-upload"></i> Upload</a></li>
+      <li><a href="repairhub.html"><i class="fas fa-tools"></i> Repair Hub</a></li>
+      <li><a href="dashboard.html"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="community.html"><i class="fas fa-users"></i> Community</a></li>
+      <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+    </ul>
+
+    <hr>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <h4>⚡ Quick Actions</h4>
+      <button class="btn" onclick="darkModeToggle()">🌙 Toggle Dark Mode</button>
+      <button class="btn" onclick="ecoTips()">💡 Eco Tip</button>
+      <button class="btn" onclick="logout()">🚪 Logout</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="panel-footer">
+      <p>© 2025 EcoCycle</p>
+    </div>
+  </div>
+</body>
+</html>

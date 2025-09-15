@@ -3,39 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <title>EcoCycle | Marketplace</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="script.js"></script>
+  <link rel="stylesheet" href="marketplace.css">
+  <script defer src="marketplace.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+  <!-- Navbar -->
   <nav class="navbar">
-    <div class="logo">EcoCycle</div>
+    <div class="logo">♻️ EcoCycle</div>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="marketplace.html" class="active">Marketplace</a></li>
       <li><a href="upload.html">Upload</a></li>
+      <li><a href="repairhub.html">Repair Hub</a></li>
+      <li><a href="community.html">Community</a></li>
+      <li><a href="profile.html">Profile</a></li>
     </ul>
+    <div class="cart-icon" onclick="toggleCart()">
+      🛒 <span id="cartCount">0</span>
+    </div>
   </nav>
 
-  <section class="page-content">
-    <h1>Marketplace 🛒</h1>
-    <p>Buy, sell, and exchange e-waste responsibly.</p>
-    <div class="cards">
-      <div class="card">
-        <h3>Old Laptop</h3>
-        <p>Repairability Score: 80%</p>
-        <button onclick="addCoins(5)" class="btn">Buy</button>
-      </div>
-      <div class="card">
-        <h3>Metal Scrap Wires</h3>
-        <p>Perfect for DIY projects.</p>
-        <button onclick="addCoins(3)" class="btn">Buy</button>
-      </div>
-      <div class="card">
-        <h3>Motherboard (Used)</h3>
-        <p>AI suggests possible reuse in PCs.</p>
-        <button onclick="addCoins(7)" class="btn">Buy</button>
-      </div>
+  <!-- Hero Banner -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>🌱 Eco Marketplace</h1>
+      <p>Discover refurbished gadgets, DIY kits, and sustainable solutions at unbeatable prices.</p>
+      <a href="#products" class="btn">Explore Now</a>
+    </div>
+  </header>
+
+  <!-- Search & Filters -->
+  <section class="filters">
+    <input type="text" id="searchBar" placeholder="🔍 Search eco-products..." onkeyup="filterProducts()">
+    <select id="categoryFilter" onchange="filterProducts()">
+      <option value="all">All Categories</option>
+      <option value="phones">Phones</option>
+      <option value="laptops">Laptops</option>
+      <option value="kits">DIY Kits</option>
+      <option value="accessories">Accessories</option>
+    </select>
+  </section>
+
+  <!-- Product Section -->
+  <section id="products" class="product-grid">
+    <!-- Example product cards -->
+    <div class="product-card" data-category="phones">
+      <img src="https://i.ibb.co/6gWnR7J/phone.png" alt="Refurbished Phone">
+      <h3>Refurbished Eco Phone</h3>
+      <p class="price">₹6,999</p>
+      <button onclick="addToCart('Refurbished Eco Phone',6999)">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="laptops">
+      <img src="https://i.ibb.co/TTgspCY/laptop.png" alt="Laptop">
+      <h3>Recycled Laptop Pro</h3>
+      <p class="price">₹22,499</p>
+      <button onclick="addToCart('Recycled Laptop Pro',22499)">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="kits">
+      <img src="https://i.ibb.co/g9ShM4Q/kit.png" alt="Kit">
+      <h3>DIY E-Waste Kit</h3>
+      <p class="price">₹1,199</p>
+      <button onclick="addToCart('DIY E-Waste Kit',1199)">Add to Cart</button>
+    </div>
+
+    <div class="product-card" data-category="accessories">
+      <img src="https://i.ibb.co/dMbHhHy/charger.png" alt="Accessory">
+      <h3>Eco Charger</h3>
+      <p class="price">₹599</p>
+      <button onclick="addToCart('Eco Charger',599)">Add to Cart</button>
     </div>
   </section>
+
+  <!-- Impact Section -->
+  <section class="impact">
+    <h2>Your Impact with EcoCycle 🌍</h2>
+    <canvas id="impactChart"></canvas>
+  </section>
+
+  <!-- Cart Modal -->
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-content">
+      <h2>🛒 Your Cart</h2>
+      <ul id="cartItems"></ul>
+      <p id="cartTotal">Total: ₹0</p>
+      <button class="btn checkout" onclick="checkout()">Checkout</button>
+      <button class="btn close" onclick="toggleCart()">Close</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 EcoCycle | Sustainable Shopping for a Greener Tomorrow 🌿</p>
+  </footer>
 </body>
 </html>
+

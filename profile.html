@@ -10,43 +10,44 @@
   <!-- Navbar -->
   <nav class="navbar">
     <div class="logo">♻ EcoCycle</div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="profile.html" class="active">Profile</a></li>
-    </ul>
+    <div class="nav-right">
+      <input type="text" class="search-bar" placeholder="Search...">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown">
+          <a href="#" class="active">Profile ▾</a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Log out</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </nav>
 
-  <!-- Page Content -->
+  <!-- Profile Section -->
   <section class="page-content">
     <div class="profile-card">
-      <img src="https://i.ibb.co/8gBtM8M/avatar.png" alt="User Avatar" class="avatar">
+      <label for="avatarUpload" class="avatar-wrapper">
+        <img src="https://i.ibb.co/8gBtM8M/avatar.png" alt="User Avatar" class="avatar" id="avatar">
+        <input type="file" id="avatarUpload" accept="image/*">
+      </label>
       <h1 id="username">Eco Warrior</h1>
-      <p class="rank">🌟 Rank: Green Champion</p>
-      <p id="coinBalance">💰 Green Coins: 0</p>
-      <button class="btn" onclick="checkCoins()">Refresh Coins</button>
+      <p id="userRank">🌱 Rank: Eco Starter</p>
+      <p id="coinBalance">💰 Green Coins: 35</p>
+      <button class="btn" onclick="checkCoins()">Collect Rewards</button>
+      <button class="btn secondary" onclick="editProfile()">Edit Profile</button>
     </div>
 
     <!-- Stats Section -->
     <div class="stats-grid">
-      <div class="stat-box">
-        <h2>12</h2>
-        <p>Uploads</p>
-      </div>
-      <div class="stat-box">
-        <h2>45</h2>
-        <p>Items Recycled</p>
-      </div>
-      <div class="stat-box">
-        <h2>78kg</h2>
-        <p>Carbon Saved</p>
-      </div>
-      <div class="stat-box">
-        <h2 id="coinStat">0</h2>
-        <p>Green Coins</p>
-      </div>
+      <div class="stat-box"><h2 id="uploads">12</h2><p>Uploads</p></div>
+      <div class="stat-box"><h2 id="recycled">45</h2><p>Items Recycled</p></div>
+      <div class="stat-box"><h2 id="carbon">78kg</h2><p>Carbon Saved</p></div>
+      <div class="stat-box"><h2 id="coinStat">35</h2><p>Green Coins</p></div>
     </div>
 
-    <!-- Progress Bar -->
+    <!-- Progress Section -->
     <div class="progress-section">
       <p>Progress to Next Rank</p>
       <div class="progress-container">
@@ -54,25 +55,27 @@
       </div>
     </div>
 
-    <!-- Badge Section -->
+    <!-- Badges -->
     <div class="badges-section">
       <h2>🏆 Achievements</h2>
       <div class="badges">
-        <div class="badge">♻ First Upload</div>
-        <div class="badge">🌱 Eco Starter</div>
-        <div class="badge locked">🔒 Recycler Pro</div>
+        <div class="badge unlocked">♻ First Upload</div>
+        <div class="badge unlocked">🌱 Eco Starter</div>
+        <div class="badge locked" id="badgePro">🔒 Recycler Pro</div>
+        <div class="badge locked" id="badgeLegend">🔒 Planet Guardian</div>
       </div>
     </div>
 
     <!-- Coin History -->
     <div class="history-section">
       <h2>💰 Coin History</h2>
+      <input type="text" id="searchHistory" placeholder="Search activity...">
       <table>
         <thead>
           <tr>
             <th>Date</th>
             <th>Activity</th>
-            <th>Coins Earned</th>
+            <th>Coins</th>
           </tr>
         </thead>
         <tbody id="coinHistory">
@@ -82,5 +85,16 @@
       </table>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 EcoCycle | Built for Sustainability</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a> | 
+      <a href="#">Terms</a> | 
+      <a href="#">Contact</a>
+    </div>
+  </footer>
 </body>
 </html>
+

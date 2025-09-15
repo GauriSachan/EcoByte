@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoByte | Login / Sign Up</title>
+  <link rel="stylesheet" href="login.css">
+  <script defer src="login.js"></script>
+  <meta name="description" content="EcoByte — Join the e-waste revolution. Log in or sign up to start reusing, recycling, and earning Green Coins!">
+</head>
+<body>
+  <!-- Background Effects -->
+  <div class="bg-animation"></div>
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- Main Auth Container -->
+  <div class="auth-container">
+    <div class="auth-card">
+      <!-- Logo -->
+      <div class="logo">
+        ♻️ <span>EcoByte</span>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button id="loginTab" class="tab active">Login</button>
+        <button id="signupTab" class="tab">Sign Up</button>
+      </div>
+
+      <!-- Forms -->
+      <div class="auth-forms">
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form">
+          <h2>Welcome Back 👋</h2>
+          <p class="desc">Log in to continue your journey to a greener world.</p>
+          <div class="input-group">
+            <input type="email" placeholder="Email" required>
+            <span class="tooltip">Enter your registered email</span>
+          </div>
+          <div class="input-group">
+            <input type="password" placeholder="Password" id="loginPassword" required>
+            <button type="button" class="toggle-pass" data-target="loginPassword">👁️</button>
+            <span class="tooltip">Your password is secure</span>
+          </div>
+          <button type="submit" class="btn primary">Login</button>
+          <p class="small-text">Forgot password? <a href="#">Reset here</a></p>
+        </form>
+
+        <!-- Signup Form -->
+        <form id="signupForm" class="auth-form hidden">
+          <h2>Create Your Account ✨</h2>
+          <p class="desc">Join EcoByte and start making a positive impact today!</p>
+          <div class="input-group">
+            <input type="text" placeholder="Full Name" required>
+            <span class="tooltip">Enter your full name</span>
+          </div>
+          <div class="input-group">
+            <input type="email" placeholder="Email" required>
+            <span class="tooltip">We will never share your email</span>
+          </div>
+          <div class="input-group">
+            <input type="password" placeholder="Password" id="signupPassword" required>
+            <button type="button" class="toggle-pass" data-target="signupPassword">👁️</button>
+            <span class="tooltip">Use at least 8 characters</span>
+          </div>
+          <div class="input-group">
+            <input type="password" placeholder="Confirm Password" id="signupConfirm" required>
+            <button type="button" class="toggle-pass" data-target="signupConfirm">👁️</button>
+            <span class="tooltip">Re-enter your password</span>
+          </div>
+          <button type="submit" class="btn primary">Sign Up</button>
+          <p class="small-text">Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+        </form>
+      </div>
+
+      <!-- Social Login -->
+      <div class="social-login">
+        <p>Or connect with</p>
+        <div class="social-icons">
+          <button class="social-btn google">G</button>
+          <button class="social-btn faceboo
