@@ -222,3 +222,127 @@ footer a:hover {
   from {opacity: 0; transform: translateY(20px);}
   to {opacity: 1; transform: translateY(0);}
 }
+/* ------------------------------
+   Upload Page
+--------------------------------*/
+.upload-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 85vh;
+  padding: 3rem 2rem;
+  background: var(--eco-soft);
+}
+
+.upload-container {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 14px;
+  max-width: 650px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+  animation: fadeIn 1.2s ease;
+}
+
+.upload-container h1 {
+  font-size: 2rem;
+  margin-bottom: 0.8rem;
+  color: var(--eco-dark);
+}
+
+.upload-subtext {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* Upload Box */
+.upload-box {
+  display: block;
+  border: 2px dashed var(--eco-green);
+  border-radius: 12px;
+  padding: 2rem;
+  background: #f9fff9;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-bottom: 1.5rem;
+}
+
+.upload-box:hover {
+  background: #e8f5e9;
+  transform: translateY(-3px);
+}
+
+.upload-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.upload-box p {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: var(--eco-green);
+}
+
+.upload-box small {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* File Preview */
+.file-preview {
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* Progress Bar */
+.progress-container {
+  width: 100%;
+  background: #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem 0 1.5rem;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 12px;
+  background: var(--eco-green);
+  transition: width 0.4s ease;
+}
+
+/* AI Results */
+.ai-results {
+  margin-top: 2rem;
+  background: #f9fff9;
+  border: 1px solid var(--eco-metal);
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: left;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  animation: fadeInUp 1s ease;
+}
+
+.ai-results h2 {
+  color: var(--eco-dark);
+  margin-bottom: 1rem;
+}
+
+.ai-results p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.ai-results strong {
+  color: var(--eco-green);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
