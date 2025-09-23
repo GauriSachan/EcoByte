@@ -3,156 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoBot Chatbot</title>
+    <title>Agtara Chatbot</title>
     <style>
-        /* CSS for the chatbot */
+        /* General styles for the page */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f0f4f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
+        /* --- Chatbot Toggle Button --- */
         .chatbot-toggle-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             background-color: #4CAF50;
             color: white;
             border: none;
-            font-size: 30px;
+            font-size: 38px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             z-index: 1001;
-            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
+        .chatbot-toggle-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- Chatbot Container --- */
         .chatbot-container {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 350px;
-            height: 450px;
+            bottom: 30px;
+            right: 30px;
+            width: 380px;
+            height: 500px;
             background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            display: none; /* Hidden by default */
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none; /* Initially hidden */
             flex-direction: column;
             overflow: hidden;
             z-index: 1000;
+            transition: all 0.3s ease;
         }
 
+        /* --- Chatbot Header --- */
         .chatbot-header {
             background-color: #4CAF50;
             color: white;
-            padding: 15px;
+            padding: 18px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top-left-radius: 15px;
-            border-top-right-radius: 15px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         }
 
         .chatbot-header h2 {
             margin: 0;
-            font-size: 1.2em;
+            font-size: 1.3em;
+            font-weight: 600;
         }
 
         .close-btn {
             background: none;
             border: none;
             color: white;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
+            transition: transform 0.2s ease;
         }
 
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        /* --- Chatbot Messages --- */
         .chatbot-messages {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            gap: 12px;
         }
 
         .message {
-            padding: 10px 15px;
-            border-radius: 20px;
-            margin-bottom: 10px;
-            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 25px;
+            max-width: 75%;
             word-wrap: break-word;
-            line-height: 1.4;
+            line-height: 1.5;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         .user-message {
             background-color: #e2f2ff;
+            color: #333;
             align-self: flex-end;
+            border-bottom-right-radius: 5px;
         }
 
         .bot-message {
             background-color: #f0f0f0;
+            color: #333;
             align-self: flex-start;
+            border-bottom-left-radius: 5px;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Chatbot Input --- */
         .chatbot-input {
             display: flex;
-            padding: 15px;
+            padding: 15px 20px;
             border-top: 1px solid #e0e0e0;
+            background-color: #fafafa;
         }
 
         #user-input {
             flex: 1;
-            padding: 12px 20px;
+            padding: 14px 22px;
             border: 1px solid #ccc;
-            border-radius: 25px;
-            margin-right: 10px;
+            border-radius: 28px;
+            margin-right: 12px;
+            font-size: 1em;
             outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #user-input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
         }
 
         #send-btn {
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 25px;
-            padding: 12px 20px;
+            border-radius: 28px;
+            padding: 14px 22px;
             cursor: pointer;
             outline: none;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         #send-btn:hover {
             background-color: #45a049;
-        }
-
-        /* Responsive design for smaller screens */
-        @media (max-width: 480px) {
-            .chatbot-container {
-                width: 100%;
-                height: 100%;
-                bottom: 0;
-                right: 0;
-                border-radius: 0;
-            }
-
-            .chatbot-toggle-btn {
-                bottom: 10px;
-                right: 10px;
-            }
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
-    <button class="chatbot-toggle-btn">💬</button>
+    <main style="text-align: center;">
+        <h1>Welcome to EcoCycle!</h1>
+        <p>This is a demonstration of the Agtara chatbot.</p>
+    </main>
+    <a href="https://ecocycle.vercel.app/" style="text-align: center;">EcoCycle Website</a>
 
-    <div class="chatbot-container">
+    <button class="chatbot-toggle-btn" id="toggle-btn">🤖</button>
+
+    <div class="chatbot-container" id="chatbot-container">
         <div class="chatbot-header">
-            <h2>EcoBot</h2>
-            <button class="close-btn">&times;</button>
+            <h2>Agtara</h2>
+            <button class="close-btn" id="close-btn">&times;</button>
         </div>
-        <div class="chatbot-messages">
+        <div class="chatbot-messages" id="chatbot-messages">
             </div>
         <div class="chatbot-input">
             <input type="text" id="user-input" placeholder="Ask a question..." />
@@ -161,63 +194,66 @@
     </div>
 
     <script>
-        // JavaScript for the chatbot logic
         document.addEventListener('DOMContentLoaded', () => {
-            const toggleBtn = document.querySelector('.chatbot-toggle-btn');
-            const chatContainer = document.querySelector('.chatbot-container');
-            const closeBtn = document.querySelector('.close-btn');
-            const chatMessages = document.querySelector('.chatbot-messages');
+            const toggleBtn = document.getElementById('toggle-btn');
+            const chatContainer = document.getElementById('chatbot-container');
+            const closeBtn = document.getElementById('close-btn');
+            const chatMessages = document.getElementById('chatbot-messages');
             const userInput = document.getElementById('user-input');
             const sendBtn = document.getElementById('send-btn');
 
-            // Show/hide chatbot
+            // --- Chatbot visibility logic ---
             toggleBtn.addEventListener('click', () => {
                 chatContainer.style.display = 'flex';
                 toggleBtn.style.display = 'none';
-                setTimeout(() => {
-                    addMessage('Hello! I am EcoBot, your digital assistant. How can I help you today? 😊', 'bot');
-                }, 500);
+                // Add initial greeting after a short delay
+                if (chatMessages.children.length === 0) {
+                    setTimeout(() => {
+                        addMessage('Hello! I am Agtara, your EcoCycle assistant. How can I help you today? 😊', 'bot');
+                    }, 500);
+                }
             });
 
             closeBtn.addEventListener('click', () => {
                 chatContainer.style.display = 'none';
-                toggleBtn.style.display = 'block';
+                toggleBtn.style.display = 'flex';
             });
 
-            // Function to add a message to the chat window
+            // --- Message handling logic ---
             const addMessage = (text, sender) => {
                 const messageDiv = document.createElement('div');
                 messageDiv.classList.add('message', `${sender}-message`);
                 messageDiv.textContent = text;
                 chatMessages.appendChild(messageDiv);
-                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to the bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
             };
 
-            // Simple rule-based responses
+            // Simple rule-based responses for Agtara
             const getBotResponse = (message) => {
-                const msg = message.toLowerCase();
+                const msg = message.toLowerCase().trim();
+                
                 if (msg.includes('hello') || msg.includes('hi')) {
-                    return 'Hi there! How can I assist you with your EcoCycle needs today?';
+                    return 'Hi there! I can help with questions about EcoCycle\'s features, marketplace, and repair services.';
                 } else if (msg.includes('features')) {
-                    return 'Our main features are the AI Repair Score, Marketplace, Repair Hub, and Gamified Rewards. You can find more details on our website.';
+                    return 'EcoCycle offers AI Repair Scores, a Marketplace, Repair Hub, and Gamified Rewards. Which feature would you like to know more about?';
                 } else if (msg.includes('marketplace')) {
-                    return 'The marketplace is where you can buy, sell, and swap refurbished electronics and parts. You can filter by category to find what you need.';
+                    return 'The Marketplace is where you can buy, sell, and swap refurbished electronics. It’s a great way to give devices a second life! 🌱';
                 } else if (msg.includes('repair hub')) {
-                    return 'The Repair Hub provides DIY guides, quick diagnostics, and a list of certified repairers. It\'s a great place to start your repair journey.';
+                    return 'The Repair Hub provides DIY guides, quick diagnostics, and a list of certified repairers near you.';
                 } else if (msg.includes('green coins')) {
-                    return 'Green Coins are in-app rewards for helping the community and reusing electronics. You can redeem them for discounts and other perks.';
+                    return 'Green Coins are rewards you earn for helping the community and reusing electronics. You can redeem them for discounts and other perks!';
                 } else if (msg.includes('upload')) {
-                    return 'You can upload an item by clicking the "Upload" button at the top of the page. It’s easy to get started!';
-                } else if (msg.includes('contact')) {
-                    return 'For support, please check the FAQ section on our website. You can also connect with us on social media.';
+                    return 'You can upload an item to the marketplace or for an AI diagnostic. Just click the "Upload" button on the site!';
                 } else if (msg.includes('thank')) {
-                    return 'You\'re welcome! Let me know if you need anything else. 😊';
+                    return 'You\'re most welcome! Is there anything else I can assist you with?';
+                } else if (msg.includes('contact')) {
+                    return 'For support, please check the FAQ section or reach out to our team via the social media links in the footer.';
                 } else {
-                    return "I'm sorry, I'm a simple bot and don't understand that. Please ask a question related to EcoCycle, like 'features' or 'marketplace'.";
+                    return "I'm a simple bot and don't understand that. Please ask about a specific EcoCycle feature like 'marketplace' or 'repair hub'.";
                 }
             };
 
-            // Handle user input
+            // --- Event listeners for sending messages ---
             const handleUserInput = () => {
                 const userText = userInput.value.trim();
                 if (userText === '') return;
@@ -228,10 +264,9 @@
                 setTimeout(() => {
                     const botResponse = getBotResponse(userText);
                     addMessage(botResponse, 'bot');
-                }, 500); // Simulate bot "thinking" time
+                }, 700); // Simulate typing delay
             };
 
-            // Event listeners for sending a message
             sendBtn.addEventListener('click', handleUserInput);
             userInput.addEventListener('keypress', (event) => {
                 if (event.key === 'Enter') {
@@ -239,3 +274,7 @@
                 }
             });
         });
+    </script>
+
+</body>
+</html>
