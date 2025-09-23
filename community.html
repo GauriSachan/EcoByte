@@ -1,27 +1,325 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>EcoCycle | Community</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <nav class="navbar">
-    <div class="logo">EcoCycle</div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="community.html" class="active">Community</a></li>
-    </ul>
-  </nav>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepairHub Community</title>
+    <!-- Use the Inter font from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+        }
 
-  <section class="page-content">
-    <h1>Community Events & Leaderboard 👥</h1>
-    <p>Join repair events, eco challenges, and see top contributors.</p>
-    <ul>
-      <li>1. Ananya - 35kg e-waste saved</li>
-      <li>2. Ravi - 28kg e-waste saved</li>
-      <li>3. Gauri - 22kg e-waste saved</li>
-    </ul>
-  </section>
+        /* Custom glow effect for the button */
+        .glow-button {
+            position: relative;
+            z-index: 10;
+        }
+
+        .glow-button::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff8c, #38d6a8, #f0fdf4, #00ff8c);
+            background-size: 400%;
+            border-radius: 12px;
+            filter: blur(8px);
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .glow-button:hover::before {
+            opacity: 1;
+            animation: glowing 10s linear infinite;
+        }
+
+        @keyframes glowing {
+            0% { background-position: 0 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0 50%; }
+        }
+
+        /* Message bubble styles */
+        .message-bubble {
+            padding: 12px;
+            border-radius: 16px;
+            word-break: break-word;
+        }
+
+        .my-message {
+            background-color: #1a422a; /* Darker green for user's own messages */
+            border-bottom-right-radius: 0;
+            margin-left: auto;
+        }
+
+        .other-message {
+            background-color: #1f2937;
+            border-bottom-left-radius: 0;
+            margin-right: auto;
+        }
+
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 antialiased">
+
+    <!-- Community Header Section -->
+    <header class="bg-gray-800 py-12 md:py-16 text-center border-b border-gray-700">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white leading-tight mb-2 tracking-tight">
+                Community Forum
+            </h1>
+            <p class="text-md md:text-lg text-gray-300 max-w-2xl mx-auto">
+                Connect with other DIYers, share your repair stories, and ask for advice.
+            </p>
+            <div class="mt-4 text-gray-400 font-medium">
+                Your User ID: <span id="userIdDisplay" class="font-mono text-emerald-400 font-bold">...</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content: Message Board & Sidebar -->
+    <main class="container mx-auto px-4 py-12 md:py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Chat Panel -->
+            <div class="lg:col-span-2 w-full bg-gray-800 p-6 md:p-8 rounded-2xl shadow-2xl border border-gray-700 flex flex-col h-[70vh] md:h-[80vh]">
+                <h2 class="text-2xl font-bold text-white mb-4">Live Chat</h2>
+                <!-- Messages Display Area -->
+                <div id="messagesContainer" class="flex-grow overflow-y-auto space-y-4 pr-2 scrollbar-hide">
+                    <div id="loading-spinner" class="text-center py-10 text-gray-500 font-medium">
+                        <svg class="animate-spin h-8 w-8 text-emerald-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <p class="mt-2">Loading messages...</p>
+                    </div>
+                </div>
+
+                <!-- Message Input Form -->
+                <form id="messageForm" class="mt-6">
+                    <div class="flex items-center space-x-4">
+                        <textarea id="messageInput" placeholder="Write your message here..." rows="1" class="flex-grow px-4 py-3 rounded-xl bg-gray-700 text-white placeholder-gray-500 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-200 resize-none overflow-hidden" required></textarea>
+                        <button type="submit" class="glow-button flex-shrink-0 bg-emerald-500 text-gray-900 font-bold py-3 px-6 rounded-xl hover:bg-emerald-600 transition-colors duration-300 transform hover:scale-105">
+                            Send
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="lg:col-span-1 w-full flex flex-col space-y-8">
+                <!-- Forum Rules -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700">
+                    <h3 class="text-xl font-bold text-white mb-4">Forum Rules</h3>
+                    <ul class="text-gray-400 space-y-2 text-sm">
+                        <li>1. Be respectful and constructive.</li>
+                        <li>2. Stay on topic: discuss e-waste and repair.</li>
+                        <li>3. No spam or self-promotion.</li>
+                        <li>4. Report any abusive behavior.</li>
+                    </ul>
+                </div>
+                <!-- Popular Posts (Placeholder) -->
+                <div class="bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700">
+                    <h3 class="text-xl font-bold text-white mb-4">Popular Posts</h3>
+                    <ul class="text-gray-400 space-y-4">
+                        <li class="border-b border-gray-700 pb-2 last:border-b-0">
+                            <a href="#" class="hover:text-emerald-400 transition-colors duration-200">
+                                <p class="text-white font-medium">How to fix a broken smartphone screen</p>
+                                <p class="text-xs text-gray-500">by UserABC • 15 replies</p>
+                            </a>
+                        </li>
+                        <li class="border-b border-gray-700 pb-2 last:border-b-0">
+                            <a href="#" class="hover:text-emerald-400 transition-colors duration-200">
+                                <p class="text-white font-medium">Laptop battery replacement guide</p>
+                                <p class="text-xs text-gray-500">by UserXYZ • 10 replies</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Message Box -->
+    <div id="message-box" class="message-box p-6 rounded-2xl hidden" role="alert">
+        <div class="text-center">
+            <h3 id="message-title" class="text-xl font-bold mb-2 text-white"></h3>
+            <p id="message-text" class="text-gray-400"></p>
+            <button id="close-message" class="mt-4 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors">Close</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Set Firebase debug log level
+        setLogLevel('Debug');
+
+        // Global variables for Firebase
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : undefined;
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // UI Elements
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageForm = document.getElementById('messageForm');
+        const messageInput = document.getElementById('messageInput');
+        const userIdDisplay = document.getElementById('userIdDisplay');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const messageBox = document.getElementById('message-box');
+        const messageTitle = document.getElementById('message-title');
+        const messageText = document.getElementById('message-text');
+        const closeButton = document.getElementById('close-message');
+
+        let userId = null;
+        let isAuthReady = false;
+
+        // --- Authentication and Initialization ---
+        const init = async () => {
+            try {
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Error signing in:", error);
+                showMessageBox('Authentication Failed', 'There was an error logging you in. Please refresh the page.');
+            }
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                userId = user.uid;
+                userIdDisplay.textContent = userId;
+                isAuthReady = true;
+                listenForMessages();
+            } else {
+                console.log('User is signed out.');
+                userId = null;
+                isAuthReady = true;
+            }
+        });
+
+        // --- Firestore Real-time Listener ---
+        const listenForMessages = () => {
+            if (!isAuthReady) return;
+
+            const collectionPath = `/artifacts/${appId}/public/data/community-messages`;
+            const messagesRef = collection(db, collectionPath);
+            const q = query(messagesRef, orderBy('createdAt'));
+
+            onSnapshot(q, (snapshot) => {
+                loadingSpinner.classList.add('hidden');
+                messagesContainer.innerHTML = '';
+                if (snapshot.empty) {
+                    messagesContainer.innerHTML = '<p class="text-center text-gray-500 py-10">Be the first to post a message!</p>';
+                    return;
+                }
+                
+                snapshot.forEach(doc => {
+                    const messageData = doc.data();
+                    const messageElement = document.createElement('div');
+                    const isMyMessage = messageData.userId === userId;
+                    
+                    messageElement.className = `message-bubble ${isMyMessage ? 'my-message ml-auto' : 'other-message mr-auto'} max-w-[80%]`;
+
+                    messageElement.innerHTML = `
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-xs font-semibold ${isMyMessage ? 'text-emerald-200' : 'text-gray-400'}">
+                                ${messageData.userId}
+                            </span>
+                            <span class="text-[0.6rem] text-gray-500">${messageData.createdAt ? new Date(messageData.createdAt.toDate()).toLocaleTimeString() : ''}</span>
+                        </div>
+                        <p class="text-sm text-gray-200">${messageData.content}</p>
+                    `;
+                    messagesContainer.appendChild(messageElement);
+                });
+                
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, (error) => {
+                console.error("Error fetching messages:", error);
+                loadingSpinner.innerHTML = '<p class="text-red-500">Failed to load messages.</p>';
+            });
+        };
+
+        // --- Form Submission Logic ---
+        messageForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!isAuthReady || !userId) {
+                showMessageBox('Please wait', 'Authentication is still in progress. Please try again in a moment.');
+                return;
+            }
+
+            const messageContent = messageInput.value.trim();
+            if (messageContent === '') {
+                return;
+            }
+
+            try {
+                await addDoc(collection(db, `/artifacts/${appId}/public/data/community-messages`), {
+                    userId: userId,
+                    content: messageContent,
+                    createdAt: serverTimestamp()
+                });
+                messageInput.value = '';
+                // The onSnapshot listener will handle rendering the new message
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                showMessageBox('Error', 'Failed to send message. Please try again.');
+            }
+        });
+
+        // --- Message Box Helpers ---
+        const showMessageBox = (title, text) => {
+            messageTitle.textContent = title;
+            messageText.textContent = text;
+            messageBox.classList.remove('hidden');
+            messageBox.classList.add('bg-gray-800', 'shadow-2xl');
+            document.body.classList.add('overflow-hidden');
+        };
+
+        closeButton.addEventListener('click', () => {
+            messageBox.classList.add('hidden');
+            messageBox.classList.remove('bg-gray-800', 'shadow-2xl');
+            document.body.classList.remove('overflow-hidden');
+        });
+
+        // Start authentication process on load
+        window.onload = init;
+    </script>
 </body>
 </html>
