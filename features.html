@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RepairHub Newsletter</title>
+    <!-- Use two fonts from Google Fonts for a more dynamic look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4; /* A very light green background */
+        }
+
+        .newsletter-section {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .newsletter-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-background {
+            background-image: url('https://placehold.co/1200x500/d1f1c7/14603e?text=Repair+Hub+Newsletter');
+            background-size: cover;
+            background-position: center;
+            border-radius: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(20, 96, 62, 0.7), rgba(20, 96, 62, 0.4)); /* Subtle gradient overlay */
+            border-radius: 1.5rem;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-[#f0fdf4] text-gray-800 antialiased">
+
+    <!-- Newsletter Container -->
+    <div class="container mx-auto px-4 py-12 md:py-16 max-w-4xl">
+
+        <!-- Hero Section -->
+        <div class="hero-background p-8 md:p-16 text-white mb-12">
+            <div class="relative z-10 text-center">
+                <h1 class="font-['Playfair_Display'] text-5xl md:text-6xl font-extrabold leading-tight mb-2 tracking-tight">
+                    RepairHub News
+                </h1>
+                <p class="text-xl font-light opacity-90 max-w-2xl mx-auto">
+                    Your monthly update on making a difference, one repair at a time.
+                </p>
+                <div class="mt-4">
+                    <span class="text-sm font-medium">Issue #01 - September 2025</span>
+                </div>
+                <a href="#" class="mt-8 inline-block bg-[#28a745] text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-[#218838] transform transition-transform hover:scale-105">
+                    Join Our Community
+                </a>
+            </div>
+        </div>
+
+        <!-- Newsletter Articles -->
+        <main class="space-y-12">
+            <!-- Article 1: Your Repair Journey Starts Here -->
+            <section class="newsletter-section p-8 md:p-10 flex flex-col md:flex-row items-start gap-8">
+                <div class="flex-shrink-0 text-[#14603e]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-16 h-16">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 01-9-9V7.5a4.5 4.5 0 119 0V21zm0 0h9" />
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="font-['Playfair_Display'] text-2xl md:text-3xl font-bold text-[#14603e] mb-2 leading-snug">
+                        Your Repair Journey Starts Here: The RepairHub Dashboard
+                    </h2>
+                    <div class="text-gray-600 space-y-4 text-lg leading-relaxed">
+                        <p>
+                            Welcome to the heart of RepairHub! Our newly redesigned dashboard is your personal command center for all things repair. You can now easily submit a new repair request with our streamlined form, providing all the necessary details to our expert volunteers.
+                        </p>
+                        <p>
+                            But it doesn't stop there. Once submitted, you can track the real-time status of your request, seeing it move from 'Pending' to 'In Progress' and finally to 'Complete'. No more guessing—just clear, transparent progress on your device's journey back to life.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Article 2: Community Connect -->
+            <section class="newsletter-section p-8 md:p-10 flex flex-col md:flex-row items-start gap-8">
+                <div class="flex-shrink-0 text-[#14603e]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-16 h-16">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5M10.5 21l-4-10.5a.75.75 0 011.2-.56l4.2 3m-2.25 1a5.25 5.25 0 005.25 5.25M17.25 6.75a5.25 5.25 0 010 10.5M21.75 6.75a2.25 2.25 0 100 4.5m-14.7-1a.75.75 0 01-1.2-.56l-4.2-3M7.5 7.5a2.25 2.25 0 100 4.5m4.5 5.25a5.25 5.25 0 005.25-5.25" />
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="font-['Playfair_Display'] text-2xl md:text-3xl font-bold text-[#14603e] mb-2 leading-snug">
+                        Join the Conversation: The New Community Forum
+                    </h2>
+                    <div class="text-gray-600 space-y-4 text-lg leading-relaxed">
+                        <p>
+                            The RepairHub community is buzzing! We've launched a new, interactive forum where you can connect with fellow DIY enthusiasts. Share your repair successes (and failures!), ask for advice, and post photos of your projects. Our real-time chat and new image-sharing features make it easier than ever to get a second opinion or show off a difficult fix.
+                        </p>
+                        <p>
+                            Don't forget to use the upvote and downvote buttons to highlight helpful posts and guide newcomers to the best advice. Your contributions help build a smarter, more supportive community. 
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Article 3: Our Mission Against E-Waste -->
+            <section class="newsletter-section p-8 md:p-10 flex flex-col md:flex-row items-start gap-8">
+                <div class="flex-shrink-0 text-[#14603e]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-16 h-16">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6m6 0a9 9 0 110-18 9 9 0 010 18z" />
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="font-['Playfair_Display'] text-2xl md:text-3xl font-bold text-[#14603e] mb-2 leading-snug">
+                        Small Actions, Big Impact: Our Mission Against E-Waste
+                    </h2>
+                    <div class="text-gray-600 space-y-4 text-lg leading-relaxed">
+                        <p>
+                            Did you know that fixing a single device can prevent up to a kilogram of e-waste from entering a landfill? At RepairHub, our mission is to empower you to reduce electronic waste and extend the lifespan of your gadgets.
+                        </p>
+                        <p>
+                            Every repair request, every question answered in the forum, and every device saved is a victory for our planet. Thank you for being a part of this movement. Together, we're building a more sustainable future, one circuit board at a time.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Newsletter Footer -->
+        <footer class="mt-12 text-center text-gray-400 text-sm">
+            <p>&copy; 2025 RepairHub. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
