@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoBot Chatbot</title>
+    <style>
+        /* CSS for the chatbot */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .chatbot-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .chatbot-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .chatbot-header h2 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+            max-width: 80%;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .user-message {
+            background-color: #e2f2ff;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #f0f0f0;
+            align-self: flex-start;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        #user-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            margin-right: 10px;
+            outline: none;
+        }
+
+        #send-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 20px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease;
+        }
+
+        #send-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 480px) {
+            .chatbot-container {
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            .chatbot-toggle-btn {
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="chatbot-toggle-btn">💬</button>
+
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <h2>EcoBot</h2>
+            <button class="close-btn">&times;</button>
+        </div>
+        <div class="chatbot-messages">
+            </div>
+        <div class="chatbot-input">
+            <input type="text" id="user-input" placeholder="Ask a question..." />
+            <button id="send-btn">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for the chatbot logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.querySelector('.chatbot-toggle-btn');
+            const chatContainer = document.querySelector('.chatbot-container');
+            const closeBtn = document.querySelector('.close-btn');
+            const chatMessages = document.querySelector('.chatbot-messages');
+            const userInput = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
+
+            // Show/hide chatbot
+            toggleBtn.addEventListener('click', () => {
+                chatContainer.style.display = 'flex';
+                toggleBtn.style.display = 'none';
+                setTimeout(() => {
+                    addMessage('Hello! I am EcoBot, your digital assistant. How can I help you today? 😊', 'bot');
+                }, 500);
+            });
+
+            closeBtn.addEventListener('click', () => {
+                chatContainer.style.display = 'none';
+                toggleBtn.style.display = 'block';
+            });
+
+            // Function to add a message to the chat window
+            const addMessage = (text, sender) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', `${sender}-message`);
+                messageDiv.textContent = text;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to the bottom
+            };
+
+            // Simple rule-based responses
+            const getBotResponse = (message) => {
+                const msg = message.toLowerCase();
+                if (msg.includes('hello') || msg.includes('hi')) {
+                    return 'Hi there! How can I assist you with your EcoCycle needs today?';
+                } else if (msg.includes('features')) {
+                    return 'Our main features are the AI Repair Score, Marketplace, Repair Hub, and Gamified Rewards. You can find more details on our website.';
+                } else if (msg.includes('marketplace')) {
+                    return 'The marketplace is where you can buy, sell, and swap refurbished electronics and parts. You can filter by category to find what you need.';
+                } else if (msg.includes('repair hub')) {
+                    return 'The Repair Hub provides DIY guides, quick diagnostics, and a list of certified repairers. It\'s a great place to start your repair journey.';
+                } else if (msg.includes('green coins')) {
+                    return 'Green Coins are in-app rewards for helping the community and reusing electronics. You can redeem them for discounts and other perks.';
+                } else if (msg.includes('upload')) {
+                    return 'You can upload an item by clicking the "Upload" button at the top of the page. It’s easy to get started!';
+                } else if (msg.includes('contact')) {
+                    return 'For support, please check the FAQ section on our website. You can also connect with us on social media.';
+                } else if (msg.includes('thank')) {
+                    return 'You\'re welcome! Let me know if you need anything else. 😊';
+                } else {
+                    return "I'm sorry, I'm a simple bot and don't understand that. Please ask a question related to EcoCycle, like 'features' or 'marketplace'.";
+                }
+            };
+
+            // Handle user input
+            const handleUserInput = () => {
+                const userText = userInput.value.trim();
+                if (userText === '') return;
+
+                addMessage(userText, 'user');
+                userInput.value = '';
+
+                setTimeout(() => {
+                    const botResponse = getBotResponse(userText);
+                    addMessage(botResponse, 'bot');
+                }, 500); // Simulate bot "thinking" time
+            };
+
+            // Event listeners for sending a message
+            sendBtn.addEventListener('click', handleUserInput);
+            userInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    handleUserInput();
+                }
+            });
+        });
