@@ -465,6 +465,48 @@
 .chatbot-input button:hover {
   background: #43a047;
 }
+/* Before */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* After (Mobile-first, then use media queries) */
+.features-grid, .card-grid {
+    display: flex;
+    flex-direction: column; /* Stack items vertically on mobile */
+    gap: 20px;
+}
+/* For larger screens (tablets and up) */
+@media (min-width: 768px) {
+    .features-grid {
+        flex-direction: row; /* Change to horizontal layout */
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .features-grid .feature-card {
+        width: 48%; /* Two cards per row */
+    }
+    .card-grid {
+        flex-direction: row;
+    }
+}
+/* For desktop screens */
+@media (min-width: 1024px) {
+    .features-grid {
+        justify-content: initial;
+        gap: 24px;
+    }
+    .features-grid .feature-card {
+        width: calc(25% - 18px); /* Four cards per row */
+    }
+}
 </style>
 
 <script>
