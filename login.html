@@ -1,81 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EcoByte | Login / Sign Up</title>
-  <link rel="stylesheet" href="login.css">
-  <script defer src="login.js"></script>
-  <meta name="description" content="EcoByte — Join the e-waste revolution. Log in or sign up to start reusing, recycling, and earning Green Coins!">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCycle | Login / Sign-up</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .form-container {
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .card {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .card-login {
+            z-index: 2;
+        }
+
+        .card-signup {
+            transform: rotateY(180deg);
+            z-index: 1;
+        }
+
+        .is-flipped .card-login {
+            transform: rotateY(-180deg);
+        }
+
+        .is-flipped .card-signup {
+            transform: rotateY(0deg);
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .btn-social svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: 0.75rem;
+        }
+    </style>
 </head>
-<body>
-  <!-- Background Effects -->
-  <div class="bg-animation"></div>
-  <canvas id="particleCanvas"></canvas>
+<body class="antialiased text-gray-800">
 
-  <!-- Main Auth Container -->
-  <div class="auth-container">
-    <div class="auth-card">
-      <!-- Logo -->
-      <div class="logo">
-        ♻️ <span>EcoByte</span>
-      </div>
+    <!-- Main Card Container -->
+    <div class="bg-gray-950 p-8 md:p-0 rounded-3xl shadow-2xl w-full max-w-5xl h-[700px] md:h-[600px] flex flex-col md:flex-row items-center gap-8 md:gap-0">
+        
+        <!-- Image Section -->
+        <div class="hidden md:flex w-1/2 h-full rounded-l-3xl overflow-hidden">
+            <img src="download (19).jpeg" alt="A person working on an eco-friendly project." class="w-full h-full object-cover">
+        </div>
+        
+        <!-- Login/Sign-up Forms -->
+        <div class="w-full md:w-1/2 h-full p-8 md:p-12 relative overflow-hidden">
+            <!-- The form-container handles the flip animation -->
+            <div id="form-container" class="form-container h-full relative">
+                
+                <!-- Login Card -->
+                <div class="card card-login bg-gray-950 flex flex-col justify-center text-white">
+                    <h2 class="text-3xl font-extrabold text-[#28a745] mb-2 text-center">Welcome Back!</h2>
+                    <p class="text-center text-gray-400 mb-8">Login to your account to continue.</p>
+                    
+                    <form id="loginForm" class="space-y-6">
+                        <div>
+                            <label for="loginEmail" class="block text-sm font-medium text-gray-300">Email Address</label>
+                            <input type="email" id="loginEmail" class="mt-1 block w-full px-4 py-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-[#4caf50] focus:border-[#4caf50] transition-colors" placeholder="you@example.com">
+                        </div>
+                        <div>
+                            <label for="loginPassword" class="block text-sm font-medium text-gray-300">Password</label>
+                            <input type="password" id="loginPassword" class="mt-1 block w-full px-4 py-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-[#4caf50] focus:border-[#4caf50] transition-colors" placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="w-full bg-[#28a745] text-white font-bold py-3 rounded-full shadow-lg hover:bg-[#218838] transition-colors">
+                            Log In
+                        </button>
+                    </form>
 
-      <!-- Tabs -->
-      <div class="auth-tabs">
-        <button id="loginTab" class="tab active">Login</button>
-        <button id="signupTab" class="tab">Sign Up</button>
-      </div>
+                    <div class="flex items-center my-6">
+                        <div class="flex-grow border-t border-gray-700"></div>
+                        <span class="flex-shrink mx-4 text-gray-500">or</span>
+                        <div class="flex-grow border-t border-gray-700"></div>
+                    </div>
 
-      <!-- Forms -->
-      <div class="auth-forms">
-        <!-- Login Form -->
-        <form id="loginForm" class="auth-form">
-          <h2>Welcome Back 👋</h2>
-          <p class="desc">Log in to continue your journey to a greener world.</p>
-          <div class="input-group">
-            <input type="email" placeholder="Email" required>
-            <span class="tooltip">Enter your registered email</span>
-          </div>
-          <div class="input-group">
-            <input type="password" placeholder="Password" id="loginPassword" required>
-            <button type="button" class="toggle-pass" data-target="loginPassword">👁️</button>
-            <span class="tooltip">Your password is secure</span>
-          </div>
-          <button type="submit" class="btn primary">Login</button>
-          <p class="small-text">Forgot password? <a href="#">Reset here</a></p>
-        </form>
+                    <div class="flex flex-col space-y-4">
+                        <button onclick="loginWithGoogle()" class="btn-social bg-gray-800 text-white hover:bg-gray-700">
+                            <!-- Google SVG Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="h-6 w-6"><path fill="#fbc02d" d="M24 10.518c5.405 0 9.245 2.87 11.235 4.888l3.414-3.44C35.91 8.52 30.22 5.518 24 5.518c-12.012 0-20.913 10.38-20.913 20.912 0 10.155 8.165 18.238 19.913 18.238 9.255 0 17.51-5.11 20.016-12.835L44.83 29H24v-7.982h18.293c.35 1.56.55 3.25.55 5.01v.47c0 10.28-7.794 18.3-19.123 18.3-10.662 0-19.123-7.567-19.123-17.658 0-10.16 8.46-17.66 19.123-17.66z"></path><path fill="#e64a19" d="M3.087 26.43c0 1.25.2 2.45.548 3.585l7.98-7.72c-2.072-1.92-3.128-4.52-3.128-7.426 0-3.37 1.58-6.43 4.25-8.583L3.635 12.3c-3.18 2.88-5.358 6.94-5.358 11.64 0 4.7.797 8.52 3.81 12.27"></path><path fill="#4caf50" d="M24 44.912c-1.328 0-2.617-.2-3.83-.586l-7.98 7.72c3.2 2.3 7.02 3.6 11.81 3.6 9.255 0 17.51-5.11 20.016-12.835l-3.414-3.44C35.91 42.422 30.22 45.422 24 45.422"></path><path fill="#1565c0" d="M44.912 26.43c0-1.76-.2-3.45-.55-5.01H24v-7.982h18.293L44.83 18.15c.95 2.19 1.48 4.6 1.48 7.28"></path></svg>
+                            Continue with Google
+                        </button>
+                        <button onclick="loginWithMicrosoft()" class="btn-social bg-gray-800 text-white hover:bg-gray-700">
+                            <!-- Microsoft SVG Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6"><path fill="#f35325" d="M2.262 2.262h9.476v9.476H2.262z"></path><path fill="#81bc06" d="M12.262 2.262h9.476v9.476h-9.476z"></path><path fill="#53a0f5" d="M2.262 12.262h9.476v9.476H2.262z"></path><path fill="#ffba08" d="M12.262 12.262h9.476v9.476h-9.476z"></path></svg>
+                            Continue with Microsoft
+                        </button>
+                        <button onclick="loginWithLinkedIn()" class="btn-social bg-gray-800 text-white hover:bg-gray-700">
+                            <!-- LinkedIn SVG Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6"><path fill="#0a66c2" d="M19.78 20H4.22c-.56 0-1-.44-1-1V4.22c0-.56.44-1 1-1h15.56c.56 0 1 .44 1 1V19c0 .56-.44 1-1 1zm-8.78-7.9a.88.88 0 0 0-.88.88V19.9c0 .49-.39.88-.88.88h-1.93c-.49 0-.88-.39-.88-.88V12.18c0-.49.39-.88.88-.88h1.93c.49 0 .88.39.88.88zM6.9 10.3c-.66 0-1.2.54-1.2 1.2v7.2c0 .66.54 1.2 1.2 1.2h.16c.66 0 1.2-.54 1.2-1.2v-7.2c0-.66-.54-1.2-1.2-1.2zM8.33 6.9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zM17.18 10.3c-.66 0-1.2.54-1.2 1.2v7.2c0 .66.54 1.2 1.2 1.2h.16c.66 0 1.2-.54 1.2-1.2v-7.2c0-.66-.54-1.2-1.2-1.2zM15.75 6.9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"></path></svg>
+                            Continue with LinkedIn
+                        </button>
+                    </div>
 
-        <!-- Signup Form -->
-        <form id="signupForm" class="auth-form hidden">
-          <h2>Create Your Account ✨</h2>
-          <p class="desc">Join EcoByte and start making a positive impact today!</p>
-          <div class="input-group">
-            <input type="text" placeholder="Full Name" required>
-            <span class="tooltip">Enter your full name</span>
-          </div>
-          <div class="input-group">
-            <input type="email" placeholder="Email" required>
-            <span class="tooltip">We will never share your email</span>
-          </div>
-          <div class="input-group">
-            <input type="password" placeholder="Password" id="signupPassword" required>
-            <button type="button" class="toggle-pass" data-target="signupPassword">👁️</button>
-            <span class="tooltip">Use at least 8 characters</span>
-          </div>
-          <div class="input-group">
-            <input type="password" placeholder="Confirm Password" id="signupConfirm" required>
-            <button type="button" class="toggle-pass" data-target="signupConfirm">👁️</button>
-            <span class="tooltip">Re-enter your password</span>
-          </div>
-          <button type="submit" class="btn primary">Sign Up</button>
-          <p class="small-text">Already have an account? <a href="#" id="switchToLogin">Login</a></p>
-        </form>
-      </div>
+                    <p class="mt-6 text-center text-sm text-gray-400">
+                        Don't have an account? 
+                        <button id="showSignup" class="text-[#28a745] font-semibold hover:text-[#4caf50] transition-colors">Sign up</button>
+                    </p>
+                </div>
+                
+                <!-- Sign-up Card -->
+                <div class="card card-signup bg-gray-950 flex flex-col justify-center text-white">
+                    <h2 class="text-3xl font-extrabold text-[#28a745] mb-2 text-center">Join Us!</h2>
+                    <p class="text-center text-gray-400 mb-8">Create a new account and start your eco-journey.</p>
+                    <form id="signupForm" class="space-y-6">
+                        <div>
+                            <label for="signupEmail" class="block text-sm font-medium text-gray-300">Email Address</label>
+                            <input type="email" id="signupEmail" class="mt-1 block w-full px-4 py-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-[#4caf50] focus:border-[#4caf50] transition-colors" placeholder="you@example.com">
+                        </div>
+                        <div>
+                            <label for="signupPassword" class="block text-sm font-medium text-gray-300">Password</label>
+                            <input type="password" id="signupPassword" class="mt-1 block w-full px-4 py-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:ring-2 focus:ring-[#4caf50] focus:border-[#4caf50] transition-colors" placeholder="••••••••">
+                        </div>
+                        <button type="submit" class="w-full bg-[#28a745] text-white font-bold py-3 rounded-full shadow-lg hover:bg-[#218838] transition-colors">
+                            Sign Up
+                        </button>
+                    </form>
+                    <div class="flex items-center my-6">
+                        <div class="flex-grow border-t border-gray-700"></div>
+                        <span class="flex-shrink mx-4 text-gray-500">or</span>
+                        <div class="flex-grow border-t border-gray-700"></div>
+                    </div>
 
-      <!-- Social Login -->
-      <div class="social-login">
-        <p>Or connect with</p>
-        <div class="social-icons">
-          <button class="social-btn google">G</button>
-          <button class="social-btn faceboo
+                    <div class="flex flex-col space-y-4">
+                        <button onclick="loginWithGoogle()" class="btn-social bg-gray-800 text-white hover:bg-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="h-6 w-6"><path fill="#fbc02d" d="M24 10.518c5.405 0 9.245 2.87 11.235 4.888l3.414-3.44C35.91 8.52 30.22 5.518 24 5.518c-12.012 0-20.913 10.38-20.913 20.912 0 10.155 8.165 18.238 19.913 18.238 9.255 0 17.51-5.11 20.016-12.835L44.83 29H24v-7.982h18.293c.35 1.56.55 3.25.55 5.01v.47c0 10.28-7.794 18.3-19.123 18.3-10.662 0-19.123-7.567-19.123-17.658 0-10.16 8.46-17.66 19.123-17.66z"></path><path fill="#e64a19" d="M3.087 26.43c0 1.25.2 2.45.548 3.585l7.98-7.72c-2.072-1.92-3.128-4.52-3.128-7.426 0-3.37 1.58-6.43 4.25-8.583L3.635 12.3c-3.18 2.88-5.358 6.94-5.358 11.64 0 4.7.797 8.52 3.81 12.27"></path><path fill="#4caf50" d="M24 44.912c-1.328 0-2.617-.2-3.83-.586l-7.98 7.72c3.2 2.3 7.02 3.6 11.81 3.6 9.255 0 17.51-5.11 20.016-12.835l-3.414-3.44C35.91 42.422 30.22 45.422 24 45.422"></path><path fill="#1565c0" d="M44.912 26.43c0-1.76-.2-3.45-.55-5.01H24v-7.982h18.293L44.83 18.15c.95 2.19 1.48 4.6 1.48 7.28"></path></svg>
+                            Continue with Google
+                        </button>
+                        <button onclick="loginWithMicrosoft()" class="btn-social bg-gray-800 text-white hover:bg-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6"><path fill="#f35325" d="M2.262 2.262h9.476v9.476H2.262z"></path><path fill="#81bc06" d="M12.262 2.262h9.476v9.476h-9.476z"></path><path fill="#53a0f5" d="M2.262 12.262h9.476v9.476H2.262z"></path><path fill="#ffba08" d="M12.262 12.262h9.476v9.476h-9.476z"></path></svg>
+                            Continue with Microsoft
+                        </button>
+                        <button onclick="loginWithLinkedIn()" class="btn-social bg-gray-800 text-white hover:bg-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-6 w-6"><path fill="#0a66c2" d="M19.78 20H4.22c-.56 0-1-.44-1-1V4.22c0-.56.44-1 1-1h15.56c.56 0 1 .44 1 1V19c0 .56-.44 1-1 1zm-8.78-7.9a.88.88 0 0 0-.88.88V19.9c0 .49-.39.88-.88.88h-1.93c-.49 0-.88-.39-.88-.88V12.18c0-.49.39-.88.88-.88h1.93c.49 0 .88.39.88.88zM6.9 10.3c-.66 0-1.2.54-1.2 1.2v7.2c0 .66.54 1.2 1.2 1.2h.16c.66 0 1.2-.54 1.2-1.2v-7.2c0-.66-.54-1.2-1.2-1.2zM8.33 6.9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5zM17.18 10.3c-.66 0-1.2.54-1.2 1.2v7.2c0 .66.54 1.2 1.2 1.2h.16c.66 0 1.2-.54 1.2-1.2v-7.2c0-.66-.54-1.2-1.2-1.2zM15.75 6.9c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5z"></path></svg>
+                            Continue with LinkedIn
+                        </button>
+                    </div>
+
+                    <p class="mt-6 text-center text-sm text-gray-400">
+                        Already have an account?
+                        <button id="showLogin" class="text-[#28a745] font-semibold hover:text-[#4caf50] transition-colors">Log in</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const formContainer = document.getElementById('form-container');
+        const showSignupBtn = document.getElementById('showSignup');
+        const showLoginBtn = document.getElementById('showLogin');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+
+        // Custom alert function to replace window.alert
+        function customAlert(message) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 200;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background-color: #1a1a1a;
+                color: #fff;
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 2px solid #28a745;
+                text-align: center;
+                max-width: 400px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            `;
+            
+            modalContent.innerHTML = `<p class="text-lg mb-4">${message}</p><button class="bg-[#28a745] text-white font-bold py-2 px-6 rounded-full hover:bg-[#218838]">OK</button>`;
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            modalContent.querySelector('button').onclick = () => document.body.removeChild(modal);
+        }
+
+        // Add a class to the container to trigger the flip animation
+        showSignupBtn.addEventListener('click', () => {
+            formContainer.classList.add('is-flipped');
+        });
+
+        showLoginBtn.addEventListener('click', () => {
+            formContainer.classList.remove('is-flipped');
+        });
+
+        // Placeholder for form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            customAlert("Logged in successfully! Redirecting...");
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        });
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            customAlert("Account created successfully! Redirecting...");
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        });
+
+        // Placeholder functions for social logins
+        function loginWithGoogle() {
+            customAlert("Logging in with Google...");
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+
+        function loginWithMicrosoft() {
+            customAlert("Logging in with Microsoft...");
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+
+        function loginWithLinkedIn() {
+            customAlert("Logging in with LinkedIn...");
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

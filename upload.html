@@ -1,79 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>EcoCycle | Upload</title>
-  <link rel="stylesheet" href="upload.css">
-  <script defer src="upload.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCycle | Upload</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for the drop area to allow styling the label */
+        .upload-box input[type="file"] {
+            display: none;
+        }
+    </style>
 </head>
-<body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="logo">♻️ EcoCycle</div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="upload.html" class="active">Upload</a></li>
-      <li><a href="marketplace.html">Marketplace</a></li>
-      <li><a href="community.html">Community</a></li>
-    </ul>
-  </nav>
+<body class="bg-gray-900 text-gray-100 antialiased">
+    <!-- Navigation Bar -->
+    <nav class="bg-gray-950 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold text-[#28a745] transition-colors hover:text-[#4caf50]">
+                ♻️ EcoCycle
+            </a>
+            <ul class="flex space-x-6">
+                <li><a href="index.html" class="text-gray-300 hover:text-[#28a745] font-medium transition-colors">Home</a></li>
+                <li><a href="upload.html" class="text-[#28a745] font-bold border-b-2 border-[#28a745]">Upload</a></li>
+                <li><a href="marketplace.html" class="text-gray-300 hover:text-[#28a745] font-medium transition-colors">Marketplace</a></li>
+                <li><a href="community.html" class="text-gray-300 hover:text-[#28a745] font-medium transition-colors">Community</a></li>
+            </ul>
+        </div>
+    </nav>
 
-  <!-- Hero Section -->
-  <header class="hero">
-    <h1>Upload Your E-Waste & Get Rewarded 🌍</h1>
-    <p>Transform your old devices into opportunities. Earn <span class="highlight">Green Coins</span> with every upload.</p>
-  </header>
+    <!-- Hero Section -->
+    <header class="bg-[#14603e] text-white py-20 md:py-32 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#14603e] to-[#218838] opacity-90"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in-down">
+                Upload Your E-Waste & Get Rewarded 🌍
+            </h1>
+            <p class="text-lg md:text-xl font-light opacity-80 animate-fade-in">
+                Transform your old devices into opportunities. Earn <span class="font-bold text-yellow-300">Green Coins</span> with every upload.
+            </p>
+        </div>
+    </header>
 
-  <!-- Upload Section -->
-  <section class="upload-section">
-    <div class="upload-card">
-      <h2>📤 Upload Your Device</h2>
-      <p>Select a video or photo of your e-waste item to begin our AI defect analysis.</p>
-      
-      <div class="upload-box" id="dropArea">
-        <input type="file" id="uploadFile" accept="video/*,image/*">
-        <label for="uploadFile">Drag & Drop or Click to Upload</label>
-      </div>
+    <!-- Upload Section -->
+    <section class="container mx-auto px-4 py-16">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Upload Card -->
+            <div class="flex-1 bg-gray-950 p-8 rounded-3xl shadow-xl border border-gray-800">
+                <h2 class="text-3xl font-bold text-[#28a745] mb-4">📤 Upload Your Device</h2>
+                <p class="text-gray-300 mb-6">Select a video or photo of your e-waste item to begin our AI defect analysis.</p>
+                
+                <div id="dropArea" class="upload-box flex flex-col items-center justify-center p-12 border-4 border-dashed border-[#28a745] rounded-2xl transition-all duration-300 hover:border-[#4caf50] hover:bg-gray-800 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-[#4caf50] mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    <input type="file" id="uploadFile" accept="video/*,image/*">
+                    <label for="uploadFile" class="text-lg text-center font-medium text-[#4caf50]">Drag & Drop or Click to Upload</label>
+                    <p id="fileName" class="text-sm text-gray-400 mt-2"></p>
+                </div>
 
-      <button onclick="simulateDefectCheck()" class="btn">Run ML Check</button>
-      <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-    </div>
+                <button onclick="simulateDefectCheck()" class="btn w-full mt-8 bg-[#28a745] text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-[#218838] transform transition-transform duration-300 hover:scale-105">
+                    Run ML Check
+                </button>
+                <div class="progress-container h-2 bg-gray-700 rounded-full mt-6 overflow-hidden">
+                    <div id="progressBar" class="h-full bg-[#4caf50] rounded-full transition-all duration-500 ease-in-out" style="width: 0%;"></div>
+                </div>
+            </div>
 
-    <div class="results-card" id="resultsCard">
-      <h2>🔍 AI Analysis Results</h2>
-      <p id="analysisText">No file uploaded yet...</p>
-      <canvas id="analysisChart"></canvas>
-    </div>
-  </section>
+            <!-- Results Card -->
+            <div class="flex-1 bg-gray-950 p-8 rounded-3xl shadow-xl border border-gray-800" id="resultsCard">
+                <h2 class="text-3xl font-bold text-[#28a745] mb-4">🔍 AI Analysis Results</h2>
+                <p id="analysisText" class="text-gray-300 mb-6">No file uploaded yet...</p>
+                <canvas id="analysisChart" class="w-full h-auto max-h-80"></canvas>
+            </div>
+        </div>
+    </section>
 
-  <!-- Benefits Section -->
-  <section class="benefits">
-    <h2>Why Upload with EcoCycle?</h2>
-    <div class="benefit-grid">
-      <div class="benefit">
-        <h3>💰 Earn Rewards</h3>
-        <p>Get Green Coins for every verified upload.</p>
-      </div>
-      <div class="benefit">
-        <h3>🌱 Save the Planet</h3>
-        <p>Your contribution helps reduce landfill waste.</p>
-      </div>
-      <div class="benefit">
-        <h3>🤖 Smart AI Analysis</h3>
-        <p>Instant defect detection with advanced ML models.</p>
-      </div>
-      <div class="benefit">
-        <h3>📊 Track Impact</h3>
-        <p>See your personal eco-stats in your dashboard.</p>
-      </div>
-    </div>
-  </section>
+    <!-- Benefits Section -->
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-extrabold text-center text-[#28a745] mb-12">Why Upload with EcoCycle?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="benefit p-8 bg-gray-950 rounded-3xl shadow-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl border border-gray-800">
+                <span class="text-5xl mb-4 block">💰</span>
+                <h3 class="text-xl font-bold text-[#28a745] mb-2">Earn Rewards</h3>
+                <p class="text-gray-300">Get Green Coins for every verified upload and analysis.</p>
+            </div>
+            <div class="benefit p-8 bg-gray-950 rounded-3xl shadow-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl border border-gray-800">
+                <span class="text-5xl mb-4 block">🌱</span>
+                <h3 class="text-xl font-bold text-[#28a745] mb-2">Save the Planet</h3>
+                <p class="text-gray-300">Your contribution helps reduce landfill waste and pollution.</p>
+            </div>
+            <div class="benefit p-8 bg-gray-950 rounded-3xl shadow-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl border border-gray-800">
+                <span class="text-5xl mb-4 block">🤖</span>
+                <h3 class="text-xl font-bold text-[#28a745] mb-2">Smart AI Analysis</h3>
+                <p class="text-gray-300">Instant defect detection with our advanced ML models.</p>
+            </div>
+            <div class="benefit p-8 bg-gray-950 rounded-3xl shadow-lg text-center transition-transform duration-300 hover:scale-105 hover:shadow-xl border border-gray-800">
+                <span class="text-5xl mb-4 block">📊</span>
+                <h3 class="text-xl font-bold text-[#28a745] mb-2">Track Impact</h3>
+                <p class="text-gray-300">See your personal eco-stats in your dashboard.</p>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 EcoCycle | Built for a Greener Tomorrow 🌿</p>
-  </footer>
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-center py-8">
+        <p class="text-gray-500 text-sm">&copy; 2025 EcoCycle | Built for a Greener Tomorrow 🌿</p>
+    </footer>
+
+    <script>
+        const dropArea = document.getElementById('dropArea');
+        const uploadFile = document.getElementById('uploadFile');
+        const fileNameElement = document.getElementById('fileName');
+        const progressBar = document.getElementById('progressBar');
+        const analysisText = document.getElementById('analysisText');
+        const analysisChart = document.getElementById('analysisChart');
+
+        // Simple Chart.js-like canvas drawing function
+        function drawChart(data) {
+            const ctx = analysisChart.getContext('2d');
+            const total = data.reduce((sum, item) => sum + item.value, 0);
+            let startAngle = 0;
+            const colors = ['#218838', '#ffc107', '#ef4444'];
+            
+            // Clear previous chart
+            ctx.clearRect(0, 0, analysisChart.width, analysisChart.height);
+
+            // Draw pie chart segments
+            data.forEach((item, index) => {
+                const sliceAngle = (item.value / total) * 2 * Math.PI;
+                ctx.beginPath();
+                ctx.arc(analysisChart.width / 2, analysisChart.height / 2, Math.min(analysisChart.width, analysisChart.height) / 2 - 20, startAngle, startAngle + sliceAngle);
+                ctx.lineTo(analysisChart.width / 2, analysisChart.height / 2);
+                ctx.fillStyle = colors[index];
+                ctx.fill();
+                startAngle += sliceAngle;
+            });
+
+            // Draw text labels
+            let legendY = 30;
+            ctx.font = '16px Inter, sans-serif';
+            data.forEach((item, index) => {
+                ctx.fillStyle = colors[index];
+                ctx.fillRect(10, legendY - 10, 15, 15);
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText(`${item.label}: ${item.value}%`, 35, legendY);
+                legendY += 25;
+            });
+        }
+
+        // Simulate ML check functionality
+        function simulateDefectCheck() {
+            if (!uploadFile.files[0]) {
+                alert("Please upload a file first!");
+                return;
+            }
+
+            // Simulate progress bar
+            let progress = 0;
+            progressBar.style.width = '0%';
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    
+                    // Simulate analysis results after delay
+                    setTimeout(() => {
+                        const randomDefect = Math.floor(Math.random() * 30) + 10;
+                        const randomUsable = 100 - randomDefect;
+                        const data = [
+                            { label: 'Defect Rate', value: randomDefect },
+                            { label: 'Usable Parts', value: randomUsable }
+                        ];
+                        
+                        // Use a simple mock chart drawing
+                        drawChart(data);
+
+                        analysisText.textContent = `Analysis Complete! Our AI detected a defect rate of ${randomDefect}% and found ${randomUsable}% of the parts to be usable.`;
+                    }, 500);
+                }
+            }, 100);
+        }
+
+        // Drag and drop functionality
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('border-[#4caf50]');
+        });
+
+        dropArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('border-[#4caf50]');
+        });
+
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('border-[#4caf50]');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                uploadFile.files = e.dataTransfer.files;
+                fileNameElement.textContent = file.name;
+                analysisText.textContent = `File "${file.name}" ready for analysis.`;
+            }
+        });
+
+        uploadFile.addEventListener('change', () => {
+            if (uploadFile.files.length > 0) {
+                fileNameElement.textContent = uploadFile.files[0].name;
+                analysisText.textContent = `File "${uploadFile.files[0].name}" ready for analysis.`;
+            }
+        });
+    </script>
 </body>
 </html>

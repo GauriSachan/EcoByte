@@ -1,103 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>EcoCycle | Marketplace</title>
-  <link rel="stylesheet" href="marketplace.css">
-  <script defer src="marketplace.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoCycle | Marketplace</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+        .cart-content {
+            background-color: #1a1a1a;
+            color: #fff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            max-width: 500px;
+            margin: auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 2px solid #28a745;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+    </style>
 </head>
-<body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">♻️ EcoCycle</div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="marketplace.html" class="active">Marketplace</a></li>
-      <li><a href="upload.html">Upload</a></li>
-      <li><a href="repairhub.html">Repair Hub</a></li>
-      <li><a href="community.html">Community</a></li>
-      <li><a href="profile.html">Profile</a></li>
-    </ul>
-    <div class="cart-icon" onclick="toggleCart()">
-      🛒 <span id="cartCount">0</span>
+<body class="bg-gray-900 text-gray-100 antialiased">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-gray-950 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold text-[#28a745] transition-colors hover:text-[#4caf50]">
+                ♻️ EcoCycle
+            </a>
+            <ul class="flex space-x-6">
+                <li><a href="index.html" class="text-gray-300 hover:text-[#28a745] font-medium transition-colors">Home</a></li>
+                <li><a href="upload.html" class="text-gray-300 hover:text-[#28a745] font-medium transition-colors">Upload</a></li>
+                <li><a href="tasks.html" class="text-gray-300 hover:text-[#28a745] font-medium transition-colors">Tasks</a></li>
+                <li><a href="marketplace.html" class="text-[#28a745] font-bold border-b-2 border-[#28a745]">Marketplace</a></li>
+                <li><a href="community.html" class="text-gray-300 hover:text-[#28a745] font-medium transition-colors">Community</a></li>
+            </ul>
+            <div onclick="toggleCart()" class="cursor-pointer relative">
+                <span class="text-3xl">🛒</span>
+                <span id="cartCount" class="absolute top-0 right-0 -mt-1 -mr-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <header class="bg-[#14603e] text-white py-20 md:py-32 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-[#14603e] to-[#218838] opacity-90"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4 animate-fade-in-down">
+                🌱 Eco Marketplace
+            </h1>
+            <p class="text-lg md:text-xl font-light opacity-80 animate-fade-in">
+                Discover refurbished gadgets, DIY kits, and sustainable solutions at unbeatable prices.
+            </p>
+        </div>
+    </header>
+
+    <!-- Search & Filters -->
+    <section class="container mx-auto px-4 py-8 flex flex-col md:flex-row gap-4">
+        <input type="text" id="searchBar" placeholder="🔍 Search eco-products..." class="flex-1 p-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#28a745]" onkeyup="filterProducts()">
+        <select id="categoryFilter" class="p-3 rounded-xl bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#28a745]" onchange="filterProducts()">
+            <option value="all">All Categories</option>
+            <option value="phones">Phones</option>
+            <option value="laptops">Laptops</option>
+            <option value="kits">DIY Kits</option>
+            <option value="accessories">Accessories</option>
+        </select>
+    </section>
+
+    <!-- Product Section -->
+    <section id="products" class="container mx-auto px-4 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <!-- Product cards will be dynamically generated here -->
+    </section>
+
+    <!-- Impact Section -->
+    <section class="container mx-auto px-4 py-16 bg-gray-950 rounded-3xl shadow-lg border border-gray-800 my-8">
+        <h2 class="text-4xl font-extrabold text-center text-[#28a745] mb-12">Your Impact with EcoCycle 🌍</h2>
+        <div class="flex flex-col md:flex-row justify-center items-center gap-8">
+            <div class="w-full md:w-1/2">
+                <canvas id="impactChart" class="w-full h-64"></canvas>
+            </div>
+            <div class="w-full md:w-1/2">
+                <p class="text-gray-300 text-lg">Every purchase you make helps reduce e-waste and supports a circular economy. See your positive impact on the world!</p>
+                <ul class="list-disc list-inside mt-4 text-gray-400">
+                    <li><span class="font-bold text-white">Refurbished Products:</span> Less demand for new manufacturing.</li>
+                    <li><span class="font-bold text-white">DIY Kits:</span> Extend the life of your devices.</li>
+                    <li><span class="font-bold text-white">Accessories:</span> Promote sustainable tech use.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="cart-modal flex items-center justify-center">
+        <div class="cart-content">
+            <span class="close-btn" onclick="toggleCart()">&times;</span>
+            <h2 class="text-2xl font-bold text-[#28a745] mb-4">🛒 Your Cart</h2>
+            <ul id="cartItems" class="space-y-4"></ul>
+            <p id="cartTotal" class="text-xl font-bold mt-4">Total: ₹0</p>
+            <button class="w-full mt-6 bg-[#28a745] text-white font-bold py-3 rounded-full shadow-lg hover:bg-[#218838] transition-colors" onclick="checkout()">Checkout</button>
+        </div>
     </div>
-  </nav>
 
-  <!-- Hero Banner -->
-  <header class="hero">
-    <div class="hero-content">
-      <h1>🌱 Eco Marketplace</h1>
-      <p>Discover refurbished gadgets, DIY kits, and sustainable solutions at unbeatable prices.</p>
-      <a href="#products" class="btn">Explore Now</a>
-    </div>
-  </header>
+    <!-- Footer -->
+    <footer class="bg-gray-950 text-center py-8">
+        <p class="text-gray-500 text-sm">&copy; 2025 EcoCycle | Sustainable Shopping for a Greener Tomorrow 🌿</p>
+    </footer>
 
-  <!-- Search & Filters -->
-  <section class="filters">
-    <input type="text" id="searchBar" placeholder="🔍 Search eco-products..." onkeyup="filterProducts()">
-    <select id="categoryFilter" onchange="filterProducts()">
-      <option value="all">All Categories</option>
-      <option value="phones">Phones</option>
-      <option value="laptops">Laptops</option>
-      <option value="kits">DIY Kits</option>
-      <option value="accessories">Accessories</option>
-    </select>
-  </section>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const products = [
+            { id: 1, name: 'Refurbished Eco Phone', price: 6999, category: 'phones', image: 'https://placehold.co/400x300/4c4c4c/fff?text=Refurbished+Phone' },
+            { id: 2, name: 'Recycled Laptop Pro', price: 22499, category: 'laptops', image: 'https://placehold.co/400x300/4c4c4c/fff?text=Recycled+Laptop' },
+            { id: 3, name: 'DIY E-Waste Kit', price: 1199, category: 'kits', image: 'https://placehold.co/400x300/4c4c4c/fff?text=DIY+Kit' },
+            { id: 4, name: 'Eco Charger', price: 599, category: 'accessories', image: 'https://placehold.co/400x300/4c4c4c/fff?text=Eco+Charger' },
+            { id: 5, name: 'Refurbished Smartwatch', price: 3500, category: 'accessories', image: 'https://placehold.co/400x300/4c4c4c/fff?text=Smartwatch' },
+            { id: 6, name: 'Recycled Desktop Monitor', price: 8500, category: 'laptops', image: 'https://placehold.co/400x300/4c4c4c/fff?text=Monitor' },
+            { id: 7, name: 'Headphone Repair Kit', price: 750, category: 'kits', image: 'https://placehold.co/400x300/4c4c4c/fff?text=Headphone+Kit' },
+            { id: 8, name: 'Solar Powered Keyboard', price: 2900, category: 'accessories', image: 'https://placehold.co/400x300/4c4c4c/fff?text=Solar+Keyboard' },
+        ];
 
-  <!-- Product Section -->
-  <section id="products" class="product-grid">
-    <!-- Example product cards -->
-    <div class="product-card" data-category="phones">
-      <img src="https://i.ibb.co/6gWnR7J/phone.png" alt="Refurbished Phone">
-      <h3>Refurbished Eco Phone</h3>
-      <p class="price">₹6,999</p>
-      <button onclick="addToCart('Refurbished Eco Phone',6999)">Add to Cart</button>
-    </div>
+        let cart = [];
 
-    <div class="product-card" data-category="laptops">
-      <img src="https://i.ibb.co/TTgspCY/laptop.png" alt="Laptop">
-      <h3>Recycled Laptop Pro</h3>
-      <p class="price">₹22,499</p>
-      <button onclick="addToCart('Recycled Laptop Pro',22499)">Add to Cart</button>
-    </div>
+        // Custom alert function
+        function customAlert(message) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 200;
+            `;
+            
+            const modalContent = document.createElement('div');
+            modalContent.style.cssText = `
+                background-color: #1a1a1a;
+                color: #fff;
+                padding: 2rem;
+                border-radius: 1rem;
+                border: 2px solid #28a745;
+                text-align: center;
+                max-width: 400px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            `;
+            
+            modalContent.innerHTML = `<p class="text-lg mb-4">${message}</p><button class="bg-[#28a745] text-white font-bold py-2 px-6 rounded-full hover:bg-[#218838]">OK</button>`;
+            
+            modal.appendChild(modalContent);
+            document.body.appendChild(modal);
+            
+            modalContent.querySelector('button').onclick = () => document.body.removeChild(modal);
+        }
 
-    <div class="product-card" data-category="kits">
-      <img src="https://i.ibb.co/g9ShM4Q/kit.png" alt="Kit">
-      <h3>DIY E-Waste Kit</h3>
-      <p class="price">₹1,199</p>
-      <button onclick="addToCart('DIY E-Waste Kit',1199)">Add to Cart</button>
-    </div>
+        function renderProducts(filteredProducts) {
+            const productsContainer = document.getElementById('products');
+            productsContainer.innerHTML = '';
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-gray-950 p-6 rounded-3xl shadow-xl border border-gray-800 transition-transform duration-300';
+                productCard.dataset.category = product.category;
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-40 object-cover rounded-2xl mb-4">
+                    <h3 class="text-xl font-bold text-gray-100 mb-2">${product.name}</h3>
+                    <p class="text-2xl font-extrabold text-[#28a745] mb-4">₹${product.price.toLocaleString('en-IN')}</p>
+                    <button onclick="addToCart(${product.id})" class="w-full bg-[#28a745] text-white font-bold py-3 rounded-full shadow-lg hover:bg-[#218838] transition-colors transform hover:scale-105">
+                        Add to Cart
+                    </button>
+                `;
+                productsContainer.appendChild(productCard);
+            });
+        }
 
-    <div class="product-card" data-category="accessories">
-      <img src="https://i.ibb.co/dMbHhHy/charger.png" alt="Accessory">
-      <h3>Eco Charger</h3>
-      <p class="price">₹599</p>
-      <button onclick="addToCart('Eco Charger',599)">Add to Cart</button>
-    </div>
-  </section>
+        function filterProducts() {
+            const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            
+            const filtered = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchQuery);
+                const matchesCategory = category === 'all' || product.category === category;
+                return matchesSearch && matchesCategory;
+            });
 
-  <!-- Impact Section -->
-  <section class="impact">
-    <h2>Your Impact with EcoCycle 🌍</h2>
-    <canvas id="impactChart"></canvas>
-  </section>
+            renderProducts(filtered);
+        }
 
-  <!-- Cart Modal -->
-  <div class="cart-modal" id="cartModal">
-    <div class="cart-content">
-      <h2>🛒 Your Cart</h2>
-      <ul id="cartItems"></ul>
-      <p id="cartTotal">Total: ₹0</p>
-      <button class="btn checkout" onclick="checkout()">Checkout</button>
-      <button class="btn close" onclick="toggleCart()">Close</button>
-    </div>
-  </div>
+        function updateCartDisplay() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            const cartCountElement = document.getElementById('cartCount');
+            
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            
+            cart.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.className = 'flex justify-between items-center bg-gray-900 p-3 rounded-xl';
+                listItem.innerHTML = `
+                    <span>${item.name} (${item.quantity})</span>
+                    <span class="font-semibold">₹${item.price.toLocaleString('en-IN')}</span>
+                `;
+                cartItemsContainer.appendChild(listItem);
+                total += item.price;
+            });
+            
+            cartTotalElement.textContent = `Total: ₹${total.toLocaleString('en-IN')}`;
+            cartCountElement.textContent = cart.length;
+        }
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 EcoCycle | Sustainable Shopping for a Greener Tomorrow 🌿</p>
-  </footer>
+        function addToCart(productId) {
+            const productToAdd = products.find(p => p.id === productId);
+            if (productToAdd) {
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity++;
+                    existingItem.price = productToAdd.price * existingItem.quantity;
+                } else {
+                    cart.push({ ...productToAdd, quantity: 1 });
+                }
+                updateCartDisplay();
+                customAlert(`${productToAdd.name} added to cart!`);
+            }
+        }
+
+        function toggleCart() {
+            const cartModal = document.getElementById('cartModal');
+            cartModal.style.display = cartModal.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                customAlert("Your cart is empty!");
+                return;
+            }
+            cart = [];
+            updateCartDisplay();
+            customAlert("Thank you for your purchase! Your order is being processed.");
+            toggleCart();
+        }
+
+        // Chart.js for Impact Section
+        function renderImpactChart() {
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['E-Waste Diverted (kg)', 'Materials Recycled (kg)', 'Emissions Saved (kg CO2)'],
+                    datasets: [{
+                        label: 'Your Impact',
+                        data: [5, 1.5, 30], // Sample data
+                        backgroundColor: [
+                            '#218838',
+                            '#4caf50',
+                            '#8bc34a'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#aaa'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initial page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts(products);
+            renderImpactChart();
+        });
+    </script>
 </body>
 </html>
-
