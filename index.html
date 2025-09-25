@@ -34,6 +34,7 @@
           <li><a href="community.html">Community</a></li>
           <li><a href="feedback.html">Feedback</a></li>
            <li><a href="daily_chores.html">Daily Chores</a></li>
+           <li><a href="premium.html">Premium</a></li>
         </ul>
       </div>
 
@@ -51,6 +52,7 @@
     <!-- Mobile navigation overlay -->
     <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
       <ul>
+        
         <li><a href="features.html">Features</a></li>
         <li><a href="#marketplace">Marketplace</a></li>
         <li><a href="repair.html">Repair Hub</a></li>
@@ -382,14 +384,247 @@
 <!-- ========================
      CHATBOT: Agtara
 ========================= -->
-<div id="agtaraChat" class="chatbot">
-  <div class="chatbot-header">🌱 Agtara — Your Eco Assistant</div>
-  <div id="chatbotMessages" class="chatbot-messages"></div>
-  <div class="chatbot-input">
-    <input id="chatbotInput" type="text" placeholder="Ask me about e-waste..." />
-    <button id="chatbotSend">Send</button>
+<style>
+    /* Custom styling for the chatbot container and scrollbar */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .chatbot {
+      width: 100%;
+      max-width: 600px;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #333;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #1a1a1a;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .chatbot-header {
+      background-color: #2c2c2c;
+      padding: 1rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
+
+    .chatbot-messages {
+      flex-grow: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chatbot-messages::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-track {
+      background: #2c2c2c;
+    }
+
+    .chatbot-messages::-webkit-scrollbar-thumb {
+      background-color: #4caf50;
+      border-radius: 10px;
+      border: 2px solid #2c2c2c;
+    }
+
+    .message {
+      max-width: 85%;
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      line-height: 1.4;
+    }
+
+    .user-message {
+      background-color: #4caf50;
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+
+    .agtara-message {
+      background-color: #2c2c2c;
+      color: #e0e0e0;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
+
+    .chatbot-input {
+      display: flex;
+      padding: 1rem;
+      border-top: 1px solid #333;
+      background-color: #1a1a1a;
+      gap: 0.5rem;
+    }
+
+    .chatbot-input input {
+      flex-grow: 1;
+      padding: 0.75rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid #444;
+      background-color: #2c2c2c;
+      color: #e0e0e0;
+      transition: border-color 0.3s ease;
+    }
+
+    .chatbot-input input:focus {
+      outline: none;
+      border-color: #4caf50;
+    }
+
+    .chatbot-input button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .chatbot-input button:hover {
+      background-color: #66bb6a;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="agtaraChat" class="chatbot">
+    <div class="chatbot-header">🌱 Agtara — Your Eco Assistant</div>
+    <div id="chatbotMessages" class="chatbot-messages"></div>
+    <div class="chatbot-input">
+      <input id="chatbotInput" type="text" placeholder="Ask me about the project..." />
+      <button id="chatbotSend">Send</button>
+    </div>
   </div>
-</div>
+
+  <script>
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotSend = document.getElementById('chatbotSend');
+    const chatbotMessages = document.getElementById('chatbotMessages');
+
+    const questionsAndAnswers = new Map([
+      ["tech stack", "We used a modern full-stack approach. For the frontend, we used React to create a dynamic and responsive user interface. For the backend, we used a combination of Node.js and Firebase. Firebase's Firestore database is a key part of our architecture, allowing us to manage user data and transactions in real-time."],
+      ["scalable", "Our solution is highly scalable. By using Firebase, we leverage Google's infrastructure, which is built to handle massive loads. The Firestore database is horizontally scalable, meaning it can easily accommodate 100,000+ users and millions of documents without a significant drop in performance. Our architecture is designed to grow with our user base."],
+      ["biggest technical challenges", "Our biggest technical challenge was ensuring real-time data synchronization across all user devices for features like the marketplace and the chat hub. We solved this by using Firestore's real-time listeners (onSnapshot), which automatically push updates to all connected clients. Another challenge was implementing a secure and reliable authentication system, which we addressed using Firebase Authentication."],
+      ["chatbot handle", "Our chatbot is designed to provide specific, pre-defined answers to questions related to the project. It uses keyword matching to find the most relevant response from its knowledge base. For complex, non-e-waste questions or anything outside of its domain, it's programmed to acknowledge the query but state that it can only answer questions about the project's features and goals."],
+      ["security measures", "We take user data security very seriously. All data is stored in Firebase's secure and compliant cloud environment. We use Firebase Authentication for user sign-in, which manages user credentials and security policies. All transactions are handled securely through our integrated APIs, and we do not store sensitive payment information directly."],
+      ["database schema", "Our database schema is designed for efficiency and scalability. We use a document-based NoSQL database (Firestore). The core collections are 'users' (storing user profiles and a reference to their private data), 'marketplace_listings' (containing details about items for exchange), and 'repair_requests' (linking users who need repairs with those who can provide them). This structure allows for fast reads and flexible data modeling."],
+      ["marketplace handle", "Our marketplace handles transactions securely by using a third-party payment API. Transactions are not processed directly on our platform. Instead, the payment API handles all financial data, providing a secure bridge between the buyer and seller. This minimizes our liability and ensures that sensitive financial information is never stored on our servers."],
+      ["apis", "We integrate with several key APIs. We use Firebase Authentication and Firestore for our core backend infrastructure. For payments and transactions, we use a secure and reliable third-party payment API. Additionally, we plan to integrate with shipping APIs to provide users with a seamless experience for sending and receiving items."],
+      ["repair hub different", "Our repair hub is different because it's an integrated part of a larger ecosystem. Unlike standalone repair sites, our hub directly connects to our marketplace and community features. We also have a user-driven certification system where users can review and rate repair technicians, building trust and a reputation system that benefits the entire community."],
+      ["specific e-waste problems", "Our solution addresses the problems of electronic devices sitting unused in homes, the difficulty of finding affordable repair services, and the lack of a community-driven platform for exchanging repairable electronics. We aim to reduce e-waste by extending the lifespan of devices and encouraging a circular economy."],
+      ["local e-waste regulations", "Our platform complies with local e-waste regulations by providing users with information on proper disposal and recycling centers in their area. We plan to integrate with government and municipal APIs to provide up-to-date information on local regulations and collection points."],
+      ["measure environmental impact", "We measure our environmental impact using several key metrics: the number of devices successfully exchanged and repaired, the estimated carbon footprint reduction from those extended lifespans, and the amount of material diverted from landfills. We calculate these metrics based on standard industry models and data."],
+      ["ensure proper recycling", "We ensure proper recycling standards by partnering with certified e-waste recyclers who adhere to global standards. When a user chooses to recycle an item, we provide them with a list of verified recyclers and a tracking system to confirm the item has reached its destination."],
+      ["handling hazardous materials", "Our approach to handling hazardous e-waste materials is twofold. For household items, we educate users on proper disposal methods and direct them to certified collection points. For industrial or commercial partners, we facilitate direct partnerships with specialized recyclers who have the expertise and equipment to safely manage and process hazardous components."],
+      ["main competitors", "Our main competitors are traditional marketplaces and recycling centers. What makes us better is our integrated approach. We are not just a marketplace; we are a complete ecosystem that combines community, repair, and a gamified reward system. This creates a more engaging and impactful user experience that encourages long-term behavior change."],
+      ["percentage of e-waste", "Currently, only a small percentage of global e-waste is formally recycled. Estimates vary, but it's generally accepted that less than 20% of e-waste is properly recycled, with the vast majority ending up in landfills or being informally processed."],
+      ["different types of e-waste", "Our platform is designed to handle a variety of e-waste types. For smaller electronics like phones and laptops, our marketplace is the primary solution. For larger appliances, we provide specialized listings and connect users with local repair services. For batteries, we provide specific guidance on safe disposal and recycling points."],
+      ["partnerships", "We have considered partnerships with municipalities and local governments to promote e-waste awareness and recycling initiatives. We also plan to partner with certified e-waste recyclers and manufacturers to create a closed-loop system for device disposal and reuse."],
+      ["revenue model", "Our primary revenue model is based on a small percentage fee for each successful transaction on our marketplace. We also plan to offer premium subscriptions for advanced analytics and priority listings. Long-term, we envision partnerships with manufacturers to support their take-back and recycling programs."],
+      ["acquire users", "We will acquire users through a combination of digital marketing, partnerships with environmental non-profits, and community-building initiatives. We will create network effects by encouraging users to invite friends, offering rewards for successful referrals, and highlighting popular listings in their area."],
+      ["go-to-market strategy", "Our go-to-market strategy is to first launch in a single city as a pilot program. We will use a targeted marketing campaign to build a local user base and refine our platform based on their feedback. Once we have a strong foothold, we will expand to other urban areas with high e-waste generation."],
+      ["monetize without discouraging recycling", "We will monetize in a way that aligns with our mission. Our fees are low and transparent, and we offer a value-added service that makes it easy for users to find what they need. Our revenue model is based on transaction volume, which directly incentivizes us to facilitate as many exchanges and repairs as possible."],
+      ["measure environmental impact", "We will measure our environmental impact through key performance indicators (KPIs) like devices saved from landfills, carbon emissions avoided, and raw materials conserved. We will partner with environmental experts to ensure our metrics are accurate and meaningful."],
+      ["expanding to other cities/countries", "Our plan for expansion involves a phased approach. We will start with a successful pilot in one city, then scale to other regions with similar e-waste challenges. International expansion will require partnerships to navigate regional regulations and customs, which we have planned for."],
+      ["handle language barriers", "We plan to handle language barriers by implementing multi-language support from the beginning. Our platform's UI will be translated, and we will use AI-powered translation services for the chat and community features."],
+      ["user acquisition cost and lifetime value", "Our user acquisition cost is projected to be low due to our focus on organic growth and community-building. Our lifetime value projection is high, as users are likely to return for future exchanges and repairs, and our premium features will drive recurring revenue."],
+      ["why a marketplace", "We chose to include a marketplace because it's a powerful way to incentivize repair and reuse. By allowing users to exchange items, we create a direct economic incentive to extend the life of electronics and to find the parts they need for their own projects."],
+      ["green coins system", "The Green Coins system incentivizes behavior change by rewarding users for sustainable actions. It's a gamified reward system that offers tangible benefits, such as discounts on premium features or featured listings. This encourages users to actively participate in the community and make sustainable choices."],
+      ["prevent fraud", "We prevent fraud through a multi-layered approach. Our certification system for repair technicians includes a verification process and user reviews. For transactions, we use a secure payment API and a dispute resolution system. We also use a reporting feature for any suspicious activity."],
+      ["verify devices are recycled", "We verify that devices are recycled properly by providing a tracking number and a confirmation receipt from our certified recycling partners. We also plan to audit our partners periodically to ensure they adhere to our standards and maintain proper documentation."],
+      ["validate that users will use platform", "We validated that users will use our platform through extensive user research, including surveys and interviews. We found that a significant portion of our target audience is frustrated with the current state of e-waste management and is actively looking for more sustainable solutions."],
+      ["user research", "We conducted extensive user research, including surveys and interviews with over 100 potential users. We asked them about their e-waste habits, their pain points with existing solutions, and their interest in a platform like ours. The feedback we received was instrumental in shaping our features and design."],
+      ["accessible to non-tech-savvy users", "We've made our platform as accessible as possible to non-tech-savvy users by using a simple, intuitive user interface. Our onboarding process is straightforward, and our chatbot, Agtara, is designed to guide users through the process. We've also included clear, step-by-step repair guides."],
+      ["user retention strategy", "Our user retention strategy is built around community and incentives. The Green Coins system rewards loyal users, while our community forum encourages engagement and collaboration. We also plan to send personalized notifications about new listings and relevant content to keep users coming back."],
+      ["kpis", "The key performance indicators we are tracking include: monthly active users, number of successful exchanges, total e-waste diverted from landfills, and customer satisfaction scores."],
+      ["use data to improve engagement", "We use data to improve user engagement by analyzing user behavior. For example, we track which features are most popular and which types of listings get the most views. We then use this data to recommend relevant content to users and optimize our platform's layout."],
+      ["ab testing", "We plan to do A/B testing on our key features, such as different landing page designs, variations of our onboarding flow, and different messaging for our newsletter. This will allow us to continuously optimize our platform and improve user experience."],
+      ["data privacy and gdpr", "We are fully compliant with data privacy regulations like GDPR. We have a clear privacy policy that explains what data we collect and why. We also provide users with the ability to view, edit, and delete their data at any time."],
+      ["2 years", "In two years, we see this platform becoming the go-to resource for e-waste exchange and repair in our pilot city. We will have a strong, engaged community and a robust network of certified repair technicians and recycling partners."],
+      ["next features", "The next features on our roadmap are a robust messaging system for the marketplace, a tool for users to list and track their personal e-waste inventory, and a community-driven blog with user-submitted repair guides."],
+      ["international expansion", "We will handle international expansion by first focusing on regions with similar e-waste regulations and consumer behaviors. We will also partner with local organizations to ensure we are compliant with regional laws and cultural norms."],
+      ["technological advancements", "We plan to incorporate technological advancements such as AI-powered diagnostics for more accurate repair suggestions and blockchain technology to create a transparent and tamper-proof tracking system for e-waste recycling."],
+      ["biggest weakness", "Our biggest weakness is the initial challenge of building a critical mass of users. A marketplace's value is dependent on a strong network effect, and it will be challenging to attract early adopters."],
+      ["assumptions might be wrong", "A key assumption we've made is that users will be willing to exchange their e-waste instead of simply throwing it away. If we are wrong, we will adjust our strategy to focus more on incentivizing recycling and providing educational resources."],
+      ["handle misuse", "If recyclers misuse our platform, we will immediately remove them from our network. Our verification process and user review system will help us detect and prevent such behavior. We will also work closely with local authorities to ensure our partners are compliant."],
+      ["primary revenue stream fails", "If our primary revenue stream from marketplace fees fails, we will pivot to a model focused on partnerships with manufacturers and governments. We can also explore a subscription model for businesses who want to use our platform to manage their e-waste."],
+      ["why not done before", "This hasn't been done successfully before because previous solutions have often been too narrow in their focus. They either focused on just recycling or just a marketplace. We are unique because we are building an integrated ecosystem that addresses the entire e-waste lifecycle."],
+      ["team's biggest disagreement", "Our biggest disagreement was over the priority of features. We resolved it by conducting a cost-benefit analysis and a thorough review of our user research. We ultimately decided to prioritize the features that would provide the most value to our users and have the biggest impact."],
+      ["most proud of", "The part of our solution we are most proud of is the Green Coins system. It's a fun and engaging way to incentivize users to participate in our mission and to make a positive impact on the environment."],
+      ["3 more months", "If we had three more months, we would improve our AI-powered diagnostics. We would use the time to train a more robust model that can provide more accurate and specific repair suggestions."],
+    ]);
+
+    const displayMessage = (message, sender) => {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+      if (sender === 'user') {
+        messageElement.classList.add('user-message');
+      } else {
+        messageElement.classList.add('agtara-message');
+      }
+      messageElement.innerHTML = message;
+      chatbotMessages.appendChild(messageElement);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    };
+
+    const handleSendMessage = () => {
+      const userInput = chatbotInput.value.trim();
+      if (userInput === '') return;
+
+      displayMessage(userInput, 'user');
+      chatbotInput.value = '';
+
+      let found = false;
+      const lowerInput = userInput.toLowerCase();
+
+      // Find a matching answer based on keywords
+      for (const [question, answer] of questionsAndAnswers) {
+        if (lowerInput.includes(question.toLowerCase())) {
+          setTimeout(() => {
+            displayMessage(answer, 'agtara');
+          }, 1000);
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        setTimeout(() => {
+          displayMessage("I'm sorry, I can only answer questions from my knowledge base about EcoByte's presentation. Please try a different question.", 'agtara');
+        }, 1000);
+      }
+    };
+
+    chatbotSend.addEventListener('click', handleSendMessage);
+
+    chatbotInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        handleSendMessage();
+      }
+    });
+
+    // Initial message from the chatbot
+    window.onload = () => {
+        displayMessage("Hello! I'm Agtara, your eco assistant. Ask me about EcoByte's project, business model, or technical implementation to prepare for your final presentation.", 'agtara');
+    };
+  </script>
 
 <style>
 /* Chatbot Styles */

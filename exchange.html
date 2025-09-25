@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="Screenshot_2025-09-25_134749-removebg-preview (1).png">
+  <title>EcoByte | Exchange</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="EcoByte — Exchange repairable goods with your community." />
+  <script defer src="script.js"></script>
+
+    <style>
+    /* ========================
+         Improved Custom CSS
+     ========================= */
+
+    /* Dark Theme Variables */
+    :root {
+      --dark-bg: #121212;
+      --dark-card: #1e1e1e;
+      --dark-text: #e0e0e0;
+      --dark-muted-text: #a0a0a0;
+      --dark-border: #333333;
+      --primary-color: #4caf50;
+      --primary-hover: #66bb6a;
+      --secondary-color: #ff9800;
+      --secondary-hover: #ffa726;
+    }
+
+    /* General Body and Text Styles */
+    body {
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+    }
+    h1, h2, h3, h4 {
+      color: var(--dark-text);
+    }
+    a {
+      color: var(--primary-color);
+    }
+    .lead, .sub, .muted {
+      color: var(--dark-muted-text);
+    }
+
+    /* Navbar Styles */
+    .site-header, .navbar {
+      background-color: #1a1a1a;
+      border-bottom-color: var(--dark-border);
+    }
+    .navbar .logo span {
+      color: var(--dark-text);
+    }
+    .nav-links a, .brand a, .hamburger {
+      color: var(--dark-text);
+    }
+    .nav-left, .nav-right {
+      background-color: #1a1a1a;
+    }
+    .search-wrap input {
+      background-color: #2c2c2c;
+      border-color: #444;
+      color: var(--dark-text);
+      transition: border-color 0.3s ease;
+    }
+    .search-wrap input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    .search-wrap input::placeholder {
+      color: #777;
+    }
+    .search-wrap button {
+      background: none;
+    }
+
+    /* Button Styles with Transitions */
+    .btn {
+      transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn.primary {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+    .btn.primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+    .btn.ghost {
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      background: transparent;
+    }
+    .btn.ghost:hover {
+      background-color: rgba(76, 175, 80, 0.1);
+      transform: translateY(-2px);
+    }
+    .btn.outline {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+    .btn.outline:hover {
+      background-color: rgba(76, 175, 80, 0.1);
+    }
+
+    /* Footer & Side Panel Styles */
+    .site-footer {
+      background-color: #1a1a1a;
+      color: var(--dark-muted-text);
+    }
+    .site-footer h3, .site-footer h4 {
+      color: var(--dark-text);
+    }
+    .site-footer a {
+      color: var(--primary-color);
+    }
+    #newsletterForm input {
+      background-color: #2c2c2c;
+      border-color: #444;
+      color: var(--dark-text);
+    }
+    #newsletterForm input::placeholder {
+      color: #777;
+    }
+    .side-panel {
+      background-color: #1a1a1a;
+      border-left-color: #444;
+    }
+    .side-panel h2 {
+      color: var(--dark-text);
+    }
+    .side-panel a {
+      color: var(--dark-muted-text);
+    }
+    .side-panel a:hover {
+      color: var(--primary-color);
+    }
+    .panel-cart {
+      color: var(--dark-muted-text);
+    }
+    .panel-overlay {
+      background: rgba(0,0,0,0.8);
+    }
+    .open-panel-btn {
+      background-color: #2c2c2c;
+      color: var(--dark-text);
+      border-color: #444;
+    }
+
+    .open-auth-btn {
+      background-color: var(--dark-card);
+      color: var(--dark-text);
+      border-color: var(--dark-border);
+    }
+    .open-auth-btn:hover {
+      background-color: #222;
+    }
+    
+    /* Exchange Page Styles */
+    .exchange-hero {
+      text-align: center;
+      padding: 60px 20px;
+      background-color: #161616;
+    }
+    .exchange-hero .lead {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .post-form {
+      background-color: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 12px;
+      padding: 40px;
+      margin: 40px auto;
+      max-width: 800px;
+    }
+
+    .post-form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--dark-text);
+      font-weight: 500;
+    }
+
+    /* Improved form field styles with focus effect */
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      background-color: #2c2c2c;
+      border: 1px solid #444;
+      border-radius: 8px;
+      color: var(--dark-text);
+      font-size: 1rem;
+      resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+    
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #777;
+    }
+
+    .post-form button {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1rem;
+    }
+
+    .exchange-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 40px 0;
+    }
+
+    /* Improved exchange card with hover effect */
+    .exchange-card {
+      background-color: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    .exchange-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    .exchange-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 20px;
+      flex-grow: 1;
+    }
+
+    .card-body h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .card-body p {
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .exchange-btn-group {
+      display: flex;
+      gap: 10px;
+      padding: 0 20px 20px;
+    }
+
+    .exchange-btn-group .btn {
+      flex-grow: 1;
+      text-align: center;
+    }
+    .exchange-btn-group .btn:hover {
+      transform: translateY(-2px); /* consistent with primary button */
+    }
+
+    </style>
+</head>
+<body>
+        <header class="site-header" role="banner">
+    <nav class="navbar" aria-label="Main navigation">
+      <div class="brand">
+        <button id="navToggle" class="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
+        <a href="index.html" class="logo" aria-label="EcoByte home">
+           <img src="Screenshot_2025-09-25_134749-removebg-preview (1).png" alt="EcoByte logo">
+           <span>EcoByte</span>
+        </a>
+      </div>
+
+      <div class="nav-left">
+        <ul class="nav-links">
+          <li><a href="features.html">Features</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
+          <li><a href="repair.html">Repair Hub</a></li>
+          <li><a href="community.html">Community</a></li>
+          <li><a href="feedback.html">Feedback</a></li>
+          <li><a href="daily_chores.html">Daily Chores</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-right">
+        <div class="search-wrap" role="search">
+          <input id="navSearch" type="search" placeholder="Search devices, parts..." aria-label="Search" />
+          <button id="searchBtn" aria-label="Search">🔎</button>
+        </div>
+
+        <button id="themeToggle" class="icon-btn" aria-pressed="false" title="Toggle theme">🌗</button>
+        <a class="cta" href="upload.html">Upload</a>
+      </div>
+    </nav>
+
+        <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+      <ul>
+        <li><a href="features.html">Features</a></li>
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="repair.html">Repair Hub</a></li>
+        <li><a href="community.html">Community</a></li>
+        <li><a href="upload.html">Upload</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+        <section class="exchange-hero" aria-labelledby="exchange-title">
+      <div class="container">
+        <h1 id="exchange-title">Community Exchange Hub 🤝</h1>
+        <p class="lead">Give your repairable electronics a second life by exchanging them for other useful items. Reduce waste, one swap at a time.</p>
+      </div>
+    </section>
+
+        <section class="post-item" aria-labelledby="post-item-heading">
+      <div class="container">
+        <form class="post-form" id="exchangeForm">
+          <h2 id="post-item-heading">Post an Item for Exchange</h2>
+          <div class="form-group">
+            <label for="itemName">Item Name</label>
+            <input type="text" id="itemName" placeholder="e.g., Old Laptop (Screen issue)" required />
+          </div>
+          <div class="form-group">
+            <label for="itemDescription">Item Details</label>
+            <textarea id="itemDescription" rows="4" placeholder="Describe the item's condition and what needs to be repaired or repurposed." required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="lookingFor">What Are You Looking For?</label>
+            <input type="text" id="lookingFor" placeholder="e.g., Working hard drive, old smartphone parts, or an offer." required />
+          </div>
+          <div class="form-group">
+            <label for="itemImage">Upload Image</label>
+            <input type="file" id="itemImage" accept="image/*" required />
+          </div>
+          <button type="submit" class="btn primary">Post for Exchange</button>
+        </form>
+      </div>
+    </section>
+
+        <section class="exchange-listings" aria-labelledby="listings-heading">
+      <div class="container">
+        <h2 id="listings-heading">Items Available for Exchange</h2>
+        <div class="exchange-grid">
+
+                    <article class="exchange-card">
+            <img src="https://images.unsplash.com/photo-1542435503-956c469947f6?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Vintage Camera">
+            <div class="card-body">
+              <h3>Vintage Film Camera</h3>
+              <p class="muted">**Condition:** Minor lens scratch. Needs a small repair.
+              <br> **Looking For:** Raspberry Pi or a working smartphone battery.</p>
+            </div>
+            <div class="exchange-btn-group">
+              <button class="btn primary">Make an Offer</button>
+              <button class="btn ghost">Message</button>
+            </div>
+          </article>
+
+                    <article class="exchange-card">
+            <img src="https://images.unsplash.com/photo-1594944203110-381a17112048?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Old Tablet">
+            <div class="card-body">
+              <h3>Tablet with Cracked Screen</h3>
+              <p class="muted">**Condition:** Screen is cracked, but the motherboard and battery are fully functional.
+              <br> **Looking For:** Old laptop RAM sticks or CPU for a school project.</p>
+            </div>
+            <div class="exchange-btn-group">
+              <button class="btn primary">Make an Offer</button>
+              <button class="btn ghost">Message</button>
+            </div>
+          </article>
+
+                    <article class="exchange-card">
+            <img src="https://images.unsplash.com/photo-1582234033099-31b3992b49c0?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3" alt="Headphones">
+            <div class="card-body">
+              <h3>Headphones (Loose Wire)</h3>
+              <p class="muted">**Condition:** Left earbud has a loose wire connection. Easy fix for an enthusiast.
+              <br> **Looking For:** Broken smart speaker or vintage stereo equipment.</p>
+            </div>
+            <div class="exchange-btn-group">
+              <button class="btn primary">Make an Offer</button>
+              <button class="btn ghost">Message</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+---
+        <footer class="site-footer">
+    <div class="container narrow">
+      <div class="footer-grid">
+        <div>
+          <h3>EcoByte</h3>
+          <p>Turn e-waste into opportunity. Buy, sell, repair, and track your impact.</p>
+          <div class="socials">🔗 <a href="#">Twitter</a> • <a href="#">Instagram</a> • <a href="#">GitHub</a></div>
+        </div>
+
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="marketplace.html">Marketplace</a></li>
+            <li><a href="repairhub.html">Repair Hub</a></li>
+            <li><a href="upload.html">Upload</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Newsletter</h4>
+          <p>Get monthly tips & hackathon updates.</p>
+          <form id="newsletterForm">
+            <input id="newsletterEmail" type="email" placeholder="Email address" required />
+            <button class="btn small">Subscribe</button>
+            <p id="newsletterMsg" class="muted small" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="smallprint">© 2025 EcoByte — Built with ❤️ for sustainability.</div>
+    </div>
+  </footer>
+</body>
+</html>
